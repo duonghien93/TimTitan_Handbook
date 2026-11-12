@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tím TiTan - Cẩm Nang Kỹ Thuật & Kịch Bản Bán Hàng</title>
+<meta name="description" content="Tài liệu sản phẩm, bảng giá, kịch bản tư vấn và xử lý từ chối - Team Tím TiTan">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<!-- Dữ liệu đã chỉnh sửa trên trang được lưu vào khối này khi bấm "Tải file đã cập nhật" -->
+<script type="application/json" id="baked">{}</script>
+<style>
+:root{
+  --bg:#f3f0fa;--card:#fff;--card-soft:#f8f5fe;
+  --line:rgba(76,29,149,.13);--line-2:rgba(76,29,149,.24);
+  --text:#1c1033;--muted:#4a3d66;--subtle:#6e6489;
+  --brand-950:#1e0b45;--brand-900:#3b1680;--brand-800:#4c1d95;--brand-700:#5b21b6;--brand-600:#7c3aed;--brand-200:#ddd0fb;--brand-100:#ede5fe;--brand-50:#f6f2ff;
+  --teal-800:#0b5e66;--teal-600:#0e8a94;--teal-50:#e8f7f8;
+  --gold-600:#a87b0c;--gold-500:#d4a72c;--gold-50:#fff8e6;
+  --red-700:#b42318;--red-50:#fef1f0;--green-700:#167a3e;--green-50:#ecf8f0;
+  --shadow:0 6px 18px -4px rgba(59,22,128,.12),0 2px 6px -2px rgba(59,22,128,.06);
+  --font:"Be Vietnam Pro",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --sidebar:250px;--header:58px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14.5px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:linear-gradient(180deg,#fff 0%,#f7f3ff 100%);border-right:1px solid var(--line);z-index:100;transition:transform .28s cubic-bezier(.4,0,.2,1)}
+.sb-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.emblem{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,var(--brand-600),var(--brand-900));border:1px solid rgba(212,167,44,.5);box-shadow:0 3px 10px rgba(76,29,149,.3)}
+.sb-head h2{font-size:17px;font-weight:900;letter-spacing:.05em;color:var(--brand-950);line-height:1.1}
+.sb-head small{display:block;font-size:11px;font-weight:600;color:var(--subtle);letter-spacing:0}
+.nav{list-style:none;padding:10px;display:flex;flex-direction:column;gap:3px;overflow-y:auto;flex:1}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;padding:9px 13px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--brand-900);font-size:13.5px;font-weight:600;text-align:left;cursor:pointer;transition:all .2s}
+.nav button:hover{background:var(--brand-50);transform:translateX(2px)}
+.nav button.active{background:linear-gradient(135deg,var(--brand-600),var(--brand-800));color:#fff;font-weight:700;border-color:rgba(212,167,44,.5);box-shadow:0 4px 14px rgba(76,29,149,.28)}
+.nav .ic{width:20px;text-align:center;font-size:15px}
+.sb-foot{padding:12px 14px;border-top:1px solid var(--line);font-size:12px;font-weight:700;color:var(--brand-800);text-align:center}
+.overlay{display:none;position:fixed;inset:0;background:rgba(20,8,45,.45);z-index:90}
+
+/* MAIN */
+.main{flex:1;min-width:0;display:flex;flex-direction:column;background:radial-gradient(1200px 500px at 90% -10%,#e6dcfb 0%,transparent 60%),radial-gradient(900px 400px at -10% 110%,#dff1f3 0%,transparent 60%)}
+.topbar{min-height:var(--header);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 22px;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbar .l{display:flex;align-items:center;gap:12px;min-width:0}
+.topbar h1{font-size:15.5px;font-weight:800;color:var(--brand-950);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar p{font-size:12px;color:var(--subtle);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-btn{display:none;padding:7px 12px;border-radius:8px;border:1px solid var(--line-2);background:#fff;font-weight:700;font-size:13px;color:var(--brand-800);cursor:pointer;flex-shrink:0}
+.tools{display:flex;gap:8px;flex-shrink:0}
+.tbtn{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;border:1px solid var(--line-2);background:#fff;font-size:12.5px;font-weight:700;color:var(--brand-800);cursor:pointer;white-space:nowrap}
+.tbtn:hover{background:var(--brand-50)}
+.tbtn.on{background:var(--gold-50);border-color:var(--gold-500);color:var(--gold-600)}
+.edit-bar{display:none;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 22px;background:var(--gold-50);border-bottom:1px solid rgba(168,123,12,.3);font-size:13px;color:#5a4206;position:sticky;top:var(--header);z-index:49}
+body.editing .edit-bar{display:flex}
+.content{padding:22px;max-width:1280px;width:100%;margin:0 auto}
+.page{display:none;animation:fade .25s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* EDITABLE */
+.ed{border-radius:5px;transition:background .15s,outline .15s}
+.ed:empty::before{content:attr(data-ph);color:var(--gold-600);font-style:italic;font-weight:600}
+body.editing .ed{outline:1.5px dashed var(--gold-500);outline-offset:2px;background:rgba(255,248,230,.7);cursor:text;min-width:40px;display:inline-block}
+body.editing .ed:focus{outline:2px solid var(--brand-600);background:#fff}
+.ed.changed{box-shadow:inset 0 -2px 0 var(--gold-500)}
+
+/* COMMON */
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px}
+.card+.card,.grid+.card,.card+.grid,.grid+.grid{margin-top:18px}
+.sec-title{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:800;color:var(--brand-900);margin-bottom:14px}
+.sec-title .n{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--brand-100);font-size:15px;flex-shrink:0}
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700;border:1px solid var(--line-2);background:var(--brand-50);color:var(--brand-800)}
+.pill.gold{background:var(--gold-50);color:var(--gold-600);border-color:rgba(168,123,12,.3)}
+.pill.teal{background:var(--teal-50);color:var(--teal-800);border-color:rgba(11,94,102,.25)}
+.pill.red{background:var(--red-50);color:var(--red-700);border-color:rgba(180,35,24,.25)}
+.pill.green{background:var(--green-50);color:var(--green-700);border-color:rgba(22,122,62,.25)}
+ul.dots{list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.dots li{position:relative;padding-left:20px}
+ul.dots li::before{content:"";position:absolute;left:4px;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--brand-600)}
+.muted{color:var(--muted)}.small{font-size:12.5px}
+.mono{font-family:var(--mono)}
+.note{border-left:4px solid var(--gold-500);background:var(--gold-50);border-radius:10px;padding:12px 14px;color:#5a4206;font-size:13.5px}
+.note.red{border-color:var(--red-700);background:var(--red-50);color:#6d1a13}
+.note.teal{border-color:var(--teal-600);background:var(--teal-50);color:var(--teal-800)}
+.note.green{border-color:var(--green-700);background:var(--green-50);color:#0f4f29}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:minmax(170px,230px) minmax(0,1.25fr) minmax(0,1fr);gap:0;padding:0;overflow:hidden}
+.hero-l{padding:24px}
+.hero-img{display:flex;align-items:center;justify-content:center;padding:18px 0 18px 18px;background:radial-gradient(circle at 50% 55%,var(--brand-100),transparent 70%)}
+.hero-img img,.pcard img{width:100%;height:auto;display:block;filter:drop-shadow(0 10px 18px rgba(59,22,128,.18))}
+.pcard{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;align-items:center}
+.pcard ul{margin-top:6px}
+.hero-r{background:linear-gradient(150deg,var(--brand-800),var(--brand-950));color:#efe9ff;padding:24px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.hero-r::after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(14,138,148,.55),transparent 70%);pointer-events:none}
+.hero h2{font-size:28px;font-weight:900;color:var(--brand-950);line-height:1.15;margin:12px 0 4px}
+.hero h2 span{color:var(--brand-600)}
+.hero .sub{font-weight:700;color:var(--brand-700);margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.price{font-family:var(--mono);font-size:30px;font-weight:700;color:#fff;line-height:1}
+.price small{font-family:var(--font);font-size:13px;font-weight:600;color:#cbbcf5}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;position:relative;z-index:1}
+.kv dt{color:#b9a8ee;font-weight:600}
+.kv dd{color:#fff;font-weight:700}
+body.editing .hero-r .ed{background:rgba(255,255,255,.12);color:#fff}
+
+.use-card{border-radius:14px;padding:16px;border:1px solid var(--line);background:var(--card-soft);display:flex;flex-direction:column;gap:6px}
+.use-card .e{font-size:24px}
+.use-card b{color:var(--brand-900);font-size:14.5px}
+.use-card p{font-size:13px;color:var(--muted)}
+.lic{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13.5px}
+.lic dt{font-weight:700;color:var(--brand-800)}
+.lic dd{color:var(--text)}
+
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+th{background:linear-gradient(135deg,var(--brand-700),var(--brand-900));color:#fff;font-weight:700;text-align:left;padding:11px 14px;font-size:13px;white-space:nowrap}
+td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even) td{background:var(--card-soft)}
+td.num,th.num{text-align:right;font-family:var(--mono);white-space:nowrap}
+tr.hl td{background:#fff8e1!important}
+tr.hl2 td{background:#ffeccc!important}
+td.step{text-align:center;vertical-align:middle;background:var(--brand-50)!important}
+.step-badge{display:inline-block;padding:6px 10px;border-radius:9px;background:var(--brand-800);color:#fff;font-weight:800;font-size:12.5px;white-space:nowrap}
+td.stage{font-weight:700;color:var(--brand-950);min-width:190px}
+td.say{min-width:300px}
+td.handle{min-width:260px;color:var(--muted)}
+.q{display:block;margin-top:6px;padding:8px 11px;border-radius:9px;background:var(--brand-50);border-left:3px solid var(--brand-600);font-style:italic;color:var(--brand-950)}
+.copy{margin-top:6px;padding:3px 9px;border-radius:7px;border:1px solid var(--line-2);background:#fff;font-size:11.5px;font-weight:700;color:var(--brand-700);cursor:pointer}
+.copy:hover{background:var(--brand-50)}
+
+/* STATS */
+.kpi{border-radius:14px;padding:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.kpi .v{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--brand-900);line-height:1.1}
+.kpi .l{font-size:12.5px;font-weight:700;color:var(--subtle);margin-top:4px}
+.kpi .s{font-size:12px;color:var(--muted);margin-top:6px}
+.kpi.warn .v{color:var(--red-700)}
+.kpi.good .v{color:var(--green-700)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar{display:grid;grid-template-columns:minmax(120px,190px) 1fr 58px;gap:10px;align-items:center;font-size:13px}
+.bar .t{background:var(--brand-50);border-radius:6px;height:14px;overflow:hidden}
+.bar .f{height:100%;background:var(--brand-600);border-radius:6px}
+.bar.top .f{background:var(--green-700)}
+.bar.low .f{background:#b9a8ee}
+.bar .p{font-family:var(--mono);font-weight:700;text-align:right;color:var(--brand-900)}
+.src{font-size:12px;color:var(--subtle);margin-top:12px}
+
+/* PERSONA / OBJ */
+.persona{border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.persona .hd{padding:14px 16px;background:linear-gradient(135deg,var(--brand-50),#fff);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.persona .hd .e{font-size:26px}
+.persona .hd b{font-size:15px;color:var(--brand-950)}
+.persona .bd{padding:14px 16px;display:flex;flex-direction:column;gap:10px;font-size:13.5px}
+.lbl{font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--brand-600)}
+.obj{border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:12px}
+.obj h3{font-size:16px;color:var(--brand-950);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.obj .say{background:var(--brand-50);border-radius:10px;padding:12px;font-style:italic;color:var(--brand-950)}
+.obj ol{padding-left:20px;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.quote{font-size:12.5px;color:var(--subtle);font-style:italic}
+
+/* SEASON */
+.timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.tl{border-radius:14px;padding:14px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;gap:8px}
+.tl::before{content:"";position:absolute;top:0;left:14px;right:14px;height:4px;border-radius:0 0 4px 4px;background:var(--c,var(--brand-600))}
+.tl .e{font-size:24px}
+.tl b{color:var(--brand-950);font-size:14px;line-height:1.3}
+.tl .angle{font-size:12.5px;font-style:italic;color:var(--brand-800);background:var(--brand-50);padding:7px 9px;border-radius:8px}
+.cal th,.cal td{padding:8px 6px}
+.cal th.m,.cal td.m{text-align:center;width:44px;min-width:40px;font-size:12px}
+.cal td.p{min-width:170px;font-weight:700;color:var(--brand-950)}
+.cal td.p small{display:block;font-weight:600;color:var(--subtle)}
+.cal td.nt{min-width:240px;font-size:12.5px;color:var(--muted)}
+.cal tr.grp td{background:var(--brand-50)!important;font-weight:800;color:var(--brand-800);font-size:13px}
+.cal tr.grp td small{font-weight:600;color:var(--subtle)}
+.cal td.m.T{background:var(--brand-600)!important;color:#fff;font-weight:800}
+.cal td.m.R{background:repeating-linear-gradient(45deg,#e8f7f8,#e8f7f8 4px,#cfeef0 4px,#cfeef0 8px)!important;color:var(--teal-800);font-weight:700}
+.cal td.m.N{background:var(--brand-100)!important;color:var(--brand-800);font-weight:700}
+.cal td.m.L{background:#e6f4dc!important;color:#2f6b12;font-weight:700}
+.cal td.m.H{background:var(--gold-50)!important;color:var(--gold-600);font-weight:800}
+.cal td.m.D3{background:#f6c9c4!important;color:#7a1a12;font-weight:800}
+.cal td.m.D2{background:#fbe3e0!important;color:#7a1a12;font-weight:700}
+.cal td.m .ed{min-width:24px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;margin:4px 0 12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:18px;height:14px;border-radius:4px;display:inline-block;border:1px solid var(--line)}
+.srcs{font-size:12px;color:var(--subtle);margin-top:12px;display:flex;flex-direction:column;gap:3px}
+.srcs a{color:var(--brand-700)}
+/* GLOSSARY */
+.gl-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.gl-tools input{flex:1;min-width:220px;padding:10px 14px;border-radius:99px;border:1px solid var(--line-2);font-size:14px;outline:none}
+.gl-tools input:focus{border-color:var(--brand-600);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.gl{border-radius:14px;border:1px solid var(--line);background:#fff;padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.gl b{font-size:15px;color:var(--brand-950)}
+.gl .say{font-size:12.5px;font-style:italic;color:var(--brand-700)}
+.gl p{font-size:13.5px;color:var(--text)}
+.gl .tip{font-size:12.5px;background:var(--teal-50);color:var(--teal-800);border-radius:8px;padding:6px 9px}
+.gl-cat{font-size:15px;font-weight:800;color:var(--brand-800);margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.month-grid td,.month-grid th{text-align:center}
+.month-grid td{min-width:90px}
+.month-grid td:first-child{font-weight:800;color:var(--brand-800);min-width:50px}
+.month-grid td.dry{background:#fff7e3!important}
+.month-grid td.wet{background:#e8f4fb!important}
+
+/* POLICY */
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bad,.good{padding:10px 12px;border-radius:10px;font-size:13px}
+.bad{background:var(--red-50);color:#6d1a13;border:1px solid rgba(180,35,24,.2)}
+.good{background:var(--green-50);color:#0f4f29;border:1px solid rgba(22,122,62,.2)}
+.bad b,.good b{display:block;font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px}
+
+/* FORMS */
+.form{display:grid;gap:14px}
+.field label,.flabel{display:block;font-size:12.5px;font-weight:700;color:var(--brand-800);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line-2);background:#fff;font-size:14px;outline:none;transition:border .2s,box-shadow .2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brand-600);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.field textarea{min-height:70px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:99px;border:1px solid var(--line-2);background:#fff;font-size:13px;font-weight:600;color:var(--brand-900);cursor:pointer;transition:all .15s;user-select:none}
+.chip span:hover{background:var(--brand-50)}
+.chip input:checked+span{background:var(--brand-700);color:#fff;border-color:var(--brand-700)}
+.chip input:focus-visible+span{box-shadow:0 0 0 3px rgba(124,58,237,.3)}
+.chip input[type=checkbox]+span::before{content:"";width:12px;height:12px;border-radius:3px;border:1.5px solid currentColor;opacity:.6}
+.chip input[type=checkbox]:checked+span::before{content:"✓";border:0;opacity:1;font-size:12px;line-height:12px;width:auto;height:auto}
+.inline-in{display:inline-block;width:auto;min-width:0;padding:6px 10px!important;font-size:13px!important}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13.5px}
+.checklist input{margin-top:3px;width:17px;height:17px;accent-color:var(--brand-600);flex-shrink:0}
+.checklist input:checked+span{color:var(--subtle);text-decoration:line-through}
+.progress{height:8px;border-radius:99px;background:var(--brand-50);overflow:hidden;margin:6px 0 12px}
+.progress i{display:block;height:100%;background:var(--green-700);width:0;transition:width .25s}
+.qty{display:flex;align-items:stretch}
+.qty button{width:42px;border:1px solid var(--line-2);background:var(--brand-50);font-size:18px;font-weight:800;color:var(--brand-800);cursor:pointer}
+.qty button:first-child{border-radius:10px 0 0 10px}
+.qty button:last-child{border-radius:0 10px 10px 0}
+.qty input{border-radius:0!important;text-align:center;border-left:0!important;border-right:0!important;font-family:var(--mono);font-weight:700}
+.total{border-radius:14px;padding:18px;background:linear-gradient(150deg,var(--brand-800),var(--brand-950));color:#fff;display:flex;flex-direction:column;gap:8px}
+.total .row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:#d7cbfa}
+.total .row b{color:#fff;font-family:var(--mono);text-align:right}
+.total .big{border-top:1px dashed rgba(255,255,255,.3);padding-top:10px;margin-top:4px;font-size:15px;color:#fff}
+.total .big b{font-size:24px;color:#ffd970}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 18px;border-radius:11px;border:0;cursor:pointer;font-weight:800;font-size:14px;background:linear-gradient(135deg,var(--brand-600),var(--brand-800));color:#fff;box-shadow:0 4px 14px rgba(76,29,149,.3);transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:#fff;color:var(--brand-800);border:1px solid var(--line-2);box-shadow:none}
+.btn.sm{padding:7px 12px;font-size:12.5px;border-radius:9px}
+pre.msg{white-space:pre-wrap;font-family:var(--font);font-size:13.5px;background:var(--brand-50);border:1px dashed var(--line-2);border-radius:12px;padding:14px;color:var(--brand-950);min-height:80px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;padding:10px 18px;border-radius:99px;background:var(--brand-950);color:#fff;font-weight:700;font-size:13px;transition:all .25s;z-index:300;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);box-shadow:8px 0 30px rgba(20,8,45,.25)}
+  .sidebar.open{transform:none}
+  .overlay.show{display:block}
+  .menu-btn{display:inline-block}
+  .hero{grid-template-columns:1fr}
+  .hero-img{padding:18px 18px 0}
+  .hero-img img{max-width:200px}
+  .pcard{grid-template-columns:100px minmax(0,1fr);gap:12px}
+  .g2,.g3{grid-template-columns:1fr}
+  .tbtn .tx{display:none}
+}
+@media (max-width:600px){
+  .content{padding:14px 16px}
+  .topbar,.edit-bar{padding-left:14px;padding-right:14px}
+  .edit-bar{position:static}
+  .g4,.timeline,.do-dont{grid-template-columns:1fr}
+  .hero h2{font-size:23px}
+  .topbar p{display:none}
+  .bar{grid-template-columns:110px 1fr 50px}
+}
+</style>
+</head>
+<body>
+<div class="overlay" id="overlay"></div>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="emblem">🦐</div>
+      <h2>TÍM TITAN<small>Cẩm nang team Sales & Ads</small></h2>
+    </div>
+    <ul class="nav" id="nav"></ul>
+    <div class="sb-foot">@ Tài liệu Team Tím TiTan</div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="l">
+        <button class="menu-btn" id="menuBtn" aria-label="Mở menu">☰ Menu</button>
+        <div style="min-width:0">
+          <h1 id="pgTitle"></h1>
+          <p id="pgDesc"></p>
+        </div>
+      </div>
+      <div class="tools">
+        <button class="tbtn" id="btnEdit" title="Bật để sửa trực tiếp các ô thông tin">✏️ <span class="tx">Sửa thông tin</span></button>
+      </div>
+    </header>
+    <div class="edit-bar">
+      <b>✏️ Đang sửa:</b> bấm vào ô viền vàng để sửa, tự lưu trên máy này.
+      <button class="btn sm" id="btnDownload">💾 Tải file đã cập nhật</button>
+      <button class="btn sm ghost" id="btnClear">↺ Bỏ chỉnh sửa trên máy này</button>
+      <span class="small">Muốn cả team thấy bản mới: tải file rồi thay file trên GitHub.</span>
+    </div>
+
+    <main class="content">
+
+      <!-- 1. PRODUCT -->
+      <section class="page" id="p-product">
+        <div class="card hero">
+          <div class="hero-img"><img src="assets/tim-titan-5l.webp" alt="Can 5 lít sát khuẩn Tím TiTan"></div>
+          <div class="hero-l">
+            <div class="tags">
+              <span class="pill">🧪 Sát khuẩn ao nuôi thủy sản</span>
+              <span class="pill teal">💧 Dạng lỏng · can 5 lít</span>
+              <span class="pill gold">📜 Giấy phép Cục Thú y</span>
+            </div>
+            <h2>Sát Khuẩn <span>Tím TiTan</span></h2>
+            <div class="sub">Chuyên xử lý khuẩn, nấm, ký sinh trùng trong nước ao nuôi</div>
+            <p class="muted">Thành phần Glutaraldehyde 15% + BKC 10%. Dạng nước, pha loãng tạt đều xuống ao, liều tính theo m³ nước. Bà con mua lại nhiều lần trong một vụ.</p>
+            <div style="margin-top:14px" class="note red">🚫 <b>KHÔNG GỌI LÀ "THUỐC TÍM".</b> Tím TiTan không phải thuốc tím KMnO4. Khi tư vấn gọi là "sát khuẩn Tím TiTan".</div>
+          </div>
+          <div class="hero-r">
+            <div>
+              <div style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#b9a8ee;text-transform:uppercase">Giá bán 1 can 5L</div>
+              <div class="price"><span class="ed" data-k="hero_price">1.325.000đ</span> <small>/ can</small></div>
+              <div class="small" style="color:#cbbcf5;margin-top:6px">Combo 3 can <b style="color:#ffd970" class="ed" data-k="hero_combo">3.600.000đ + tặng 1 can 5L</b></div>
+            </div>
+            <dl class="kv">
+              <dt>Quy cách</dt><dd>Can 5 lít</dd>
+              <dt>Giá trị đơn TB</dt><dd>~2.400.000đ / đơn (T11)</dd>
+              <dt>Hạn dùng</dt><dd>2 năm chưa mở nắp · 6 tháng sau khi mở</dd>
+              <dt>Bảo quản</dt><dd>Khô ráo, thoáng mát, tránh nắng trực tiếp</dd>
+              <dt>Đơn vị phân phối</dt><dd><span class="ed" data-k="dist_name" data-ph="Nhập tên công ty">Thủy Sản Miền Nam</span></dd>
+              <dt>Địa chỉ</dt><dd><span class="ed" data-k="dist_addr">Song Hành, An Phú, Quận 2, TP. Hồ Chí Minh</span></dd>
+              <dt>Hotline</dt><dd><span class="ed" data-k="hotline" data-ph="Nhập hotline"></span></dd>
+              <dt>Giao hàng</dt><dd><span class="ed" data-k="ship" data-ph="Phí ship, thời gian giao"></span></dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="grid g2">
+          <div class="card">
+            <div class="sec-title"><span class="n">📜</span>Giấy chứng nhận lưu hành thuốc thú y</div>
+            <dl class="lic">
+              <dt>Cơ quan cấp</dt><dd>Cục Thú y – Bộ NN&amp;PTNT</dd>
+              <dt>Số giấy phép</dt><dd class="mono">94/QLT-TS-SX-23</dd>
+              <dt>Số đăng ký</dt><dd class="mono">BD.TS1-20</dd>
+              <dt>Tên trên giấy phép</dt><dd><b>NOVAXIDE</b></dd>
+              <dt>Hoạt chất</dt><dd>Alkylbenzyldimethylammonium chloride (BKC), Glutaraldehyde</dd>
+              <dt>Dạng bào chế</dt><dd>Dung dịch dùng ngoài</dd>
+              <dt>Đăng ký &amp; sản xuất</dt><dd>Công ty Liên doanh TNHH ANOVA (Bình Dương)</dd>
+              <dt>Ngày cấp</dt><dd>14/4/2023</dd>
+              <dt>Hiệu lực đến</dt><dd><b>14/4/2028</b></dd>
+            </dl>
+            <div class="note" style="margin-top:14px">Giấy phép đứng tên <b>NOVAXIDE</b>. Cần xác nhận Tím TiTan là tên thương mại lưu hành theo giấy phép này: <span class="ed" data-k="lic_confirm" data-ph="Leader ghi xác nhận / số giấy phép đúng của Tím TiTan"></span></div>
+          </div>
+          <div class="card">
+            <div class="sec-title"><span class="n">✅</span>Công dụng ĐƯỢC nói (đúng giấy phép)</div>
+            <div class="grid" style="gap:12px">
+              <div class="use-card"><span class="e">🦠</span><b>Diệt vi khuẩn, nấm, nguyên sinh động vật trong nước ao nuôi</b><p>Dùng trước khi thả giống (ao lắng, ao nuôi), xử lý nước định kỳ, xử lý nước khi ao có mầm bệnh.</p></div>
+              <div class="use-card"><span class="e">🧺</span><b>Sát trùng dụng cụ nuôi trồng thủy sản</b><p>Lưới, vợt, thau, thúng, bể ương, bạt trước khi cấp nước.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sec-title"><span class="n">⭐</span>Điểm mạnh khi tư vấn</div>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))">
+            <div class="use-card"><span class="e">🧪</span><b>2 hoạt chất</b><p>Glutaraldehyde 15% + BKC 10%, có giấy phép lưu hành của Cục Thú y.</p></div>
+            <div class="use-card"><span class="e">💧</span><b>Dạng lỏng, dễ dùng</b><p>Pha loãng, tạt đều xuống ao. Liều tính sẵn theo m³ nước.</p></div>
+            <div class="use-card"><span class="e">💰</span><b>Chi phí theo m³ thấp</b><p>Xử lý định kỳ khoảng 66.000đ / 1.000m³ / lần theo giá lẻ. Xem mục Liều Dùng.</p></div>
+            <div class="use-card"><span class="e">🔄</span><b>Kết hợp men vi sinh</b><p>Sau khi xử lý có thể đánh men vi sinh Super Aqua để phục hồi hệ vi sinh có lợi.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. PRICE -->
+      <section class="page" id="p-price">
+        <div class="card">
+          <div class="note" style="margin-bottom:14px"><b>1 can và Combo 3</b> dùng để <b>so giá mỗi lít khi thuyết phục khách</b>: mua combo thì mỗi lít rẻ hơn hẳn. Khách muốn mua nhiều hơn, sale vẫn báo được combo cao theo chính sách hiện hành (trao đổi trực tiếp, không đăng trên trang). Giá <b class="ed" data-k="price_scope">áp dụng với Team Sale New</b>. Ô <b>Data bào 1 / Data bào 2</b> để Leader bật <b>✏️ Sửa thông tin</b> điền ưu đãi thêm cho data đã gọi sau 2 ngày / 4 ngày. Giá và khuyến mãi sửa trực tiếp được, ô Báo Giá Nhanh tự dùng giá mới.</div>
+          <div class="grid g2" id="priceCards"></div>
+        </div>
+        <div class="grid g3">
+          <div class="kpi"><div class="v">66%</div><div class="l">đơn T11 chỉ mua 1 can</div><div class="s">Cơ hội lớn nhất để nâng giá trị đơn</div></div>
+          <div class="kpi good"><div class="v">30%</div><div class="l">đơn T11 chọn combo 3 can</div><div class="s">3 can = 3.600.000đ, tặng thêm 1 can → chỉ 180.000đ/lít</div></div>
+          <div class="kpi"><div class="v">265k → 180k</div><div class="l">giá mỗi lít: 1 can → combo 3 can</div><div class="s">Dùng con số này khi khách chê giá</div></div>
+        </div>
+      </section>
+
+      <!-- 3. DOSAGE -->
+      <section class="page" id="p-dose">
+        <div class="grid g2">
+          <div class="card">
+            <div class="sec-title"><span class="n">🧪</span>Liều dùng chuẩn</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Mục đích</th><th>Liều</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td><b>Xử lý ao lắng, ao nuôi trước khi thả</b></td><td class="mono">1 lít / 2.000m³</td><td>Lúc cần dùng nhất</td></tr>
+                <tr><td><b>Xử lý nước ao nuôi định kỳ</b></td><td class="mono">1 lít / 4.000m³</td><td>7–10 ngày / lần</td></tr>
+                <tr><td><b>Xử lý nước khi ao có mầm bệnh</b></td><td class="mono">1 lít / 3.000m³</td><td>Dùng 5–7 ngày</td></tr>
+                <tr><td><b>Sát trùng bể (nước đứng/chảy chậm)</b></td><td class="mono">100ml / 50–70m³</td><td></td></tr>
+                <tr><td><b>Vệ sinh bể, dụng cụ</b></td><td class="mono">6ml / m³</td><td>Ngâm 10 giờ rồi rửa sạch</td></tr>
+              </tbody>
+            </table></div>
+            <div class="note" style="margin-top:12px">Pha loãng rồi tạt đều xuống ao.</div>
+            <ul class="dots" style="margin-top:12px">
+              <li>Dùng lúc <b>trời nắng</b>, oxy trong nước cao. <b>Tăng cường oxy</b> khi dùng.</li>
+              <li><b>Chỉ đánh lúc tôm cá đang đói</b>, không đánh lúc mới ăn no.</li>
+              <li>Sau khi xử lý có thể đánh <b>men vi sinh Super Aqua</b> để phục hồi hệ vi sinh.</li>
+              <li><b>Ao ốc:</b> chỉ dùng 1/3 – 1/4 liều ao tôm cá. Pha thật loãng, tạt đều, tránh chỗ ốc tập trung. Sau 36–48h bắt buộc đánh lại men vi sinh + Yucca.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="sec-title"><span class="n">🧮</span>Tính lượng dùng &amp; chi phí cho ao của khách</div>
+            <div class="form">
+              <div class="grid g2" style="gap:12px">
+                <div class="field"><label for="dArea">Diện tích ao (m²)</label><input id="dArea" type="number" min="0" placeholder="VD: 2000"></div>
+                <div class="field"><label for="dDepth">Độ sâu nước (m)</label><input id="dDepth" type="number" min="0" step="0.1" placeholder="VD: 1.5"></div>
+              </div>
+              <div class="field"><label for="dVol">Thể tích nước (m³) – tự tính hoặc nhập thẳng</label><input id="dVol" type="number" min="0" placeholder="VD: 3000"></div>
+              <div>
+                <span class="flabel">Mục đích</span>
+                <div class="chips" id="dPurpose">
+                  <label class="chip"><input type="radio" name="dp" value="2000" checked><span>Trước thả (1L/2.000m³)</span></label>
+                  <label class="chip"><input type="radio" name="dp" value="4000"><span>Định kỳ (1L/4.000m³)</span></label>
+                  <label class="chip"><input type="radio" name="dp" value="3000"><span>Có mầm bệnh (1L/3.000m³)</span></label>
+                </div>
+              </div>
+            </div>
+            <div class="total" style="margin-top:16px">
+              <div class="row"><span>Thể tích nước</span><b id="dOutVol">–</b></div>
+              <div class="row"><span>Lượng cần mỗi lần</span><b id="dOutL">–</b></div>
+              <div class="row"><span>Chi phí / lần (giá 1 can)</span><b id="dOutC1">–</b></div>
+              <div class="row"><span>Chi phí / lần (combo 3 can)</span><b id="dOutC3">–</b></div>
+              <div class="row big"><span>Mỗi 1.000m³ / lần</span><b id="dOutK">–</b></div>
+            </div>
+            <pre class="msg" id="dMsg" style="margin-top:12px"></pre>
+            <button class="btn sm" style="margin-top:10px" id="dCopy">📋 Chép câu báo chi phí</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. INBOX -->
+      <section class="page" id="p-inbox">
+        <div class="card">
+          <div class="note red" style="margin-bottom:12px">💰 <b>KHÔNG BÁO GIÁ TRONG INBOX khi khách chưa để lại SĐT.</b> Khách hỏi giá → hẹn kỹ thuật gọi báo giá ưu đãi theo ao. Chỉ báo giá sau khi đã có số điện thoại.</div>
+          <div class="note" style="margin-bottom:16px"><b>📌 3 lưu ý bắt buộc cho người trực inbox:</b>
+            <ul class="dots" style="margin-top:8px">
+              <li>Mục tiêu duy nhất: <b>xin SĐT + khung giờ tiện nghe máy</b>. 27% data mất đơn T11 là do không liên lạc được.</li>
+              <li><b>Hỏi loài nuôi ngay câu đầu.</b> Data tôm chốt 27%, data cá chỉ 8%. Data không ghi loài chỉ chốt 9%.</li>
+              <li>Không gọi là "thuốc tím". Không cam kết kết quả ("dứt điểm", "diệt 100%").</li>
+            </ul>
+          </div>
+          <div class="tbl-wrap"><table id="tblInbox"></table></div>
+        </div>
+      </section>
+
+      <!-- 5. CALL -->
+      <section class="page" id="p-call">
+        <div class="card">
+          <div class="note" style="margin-bottom:16px"><b>📌 4 lưu ý bắt buộc cho Sales gọi điện (rút ra từ data T11):</b>
+            <ul class="dots" style="margin-top:8px">
+              <li><b>Gọi trong 15 phút</b> khi data về. 90% đơn chốt trong 24h đầu, trung vị chỉ 30 phút.</li>
+              <li><b>Cuộc gọi đầu quyết định</b>: 78% đơn chốt ngay lần gọi 1. Chuẩn bị kỹ trước khi bấm gọi.</li>
+              <li><b>Hỏi diện tích / m³ TRƯỚC khi báo giá.</b> Note có chữ "giá cao" chỉ chốt 6%.</li>
+              <li><b>Không gọi lần 3 cùng một kiểu</b>: từ lần 3 tỷ lệ chốt rơi còn 4–5%. Lần 3 phải đổi kênh (Zalo) hoặc đổi ưu đãi.</li>
+            </ul>
+          </div>
+          <div class="pcard card" style="margin-bottom:16px;box-shadow:none;background:var(--card-soft)">
+            <img src="assets/tim-titan-5l.webp" alt="Can 5 lít sát khuẩn Tím TiTan">
+            <div>
+              <div class="lbl">Thẻ cầm tay khi gọi</div>
+              <b style="font-size:16px;color:var(--brand-950)">Sát khuẩn Tím TiTan – can 5 lít</b>
+              <ul class="dots small">
+                <li>Chuyên xử lý khuẩn – nấm – ký sinh trùng trong nước ao nuôi</li>
+                <li>Dạng nước, 1 lít pha với 50 lít nước rồi tạt đều. Có giấy phép Cục Thú y</li>
+                <li>Combo 1: 1 can 1.325.000đ tặng men tiêu hóa · Combo 3: 3 can 3.600.000đ tặng 1 can 5L</li>
+                <li>Bảo quản 2 năm · hư hỏng trong hạn đổi can mới · kiểm tra hàng trước khi thanh toán</li>
+              </ul>
+            </div>
+          </div>
+          <div class="tbl-wrap"><table id="tblCall"></table></div>
+        </div>
+      </section>
+
+      <!-- 6. OBJECTIONS -->
+      <section class="page" id="p-objection">
+        <div class="note teal" style="margin-bottom:18px">Lấy từ sale note T11: 641 data sạch chưa ra đơn. Tỷ lệ là % trên số data mất đơn. Trích câu khách nói nguyên văn từ note.</div>
+        <div class="grid g2" id="objGrid"></div>
+      </section>
+
+      <!-- 7. NOTE BUILDER -->
+      <section class="page" id="p-note">
+        <div class="grid g2">
+          <div class="card">
+            <div class="sec-title"><span class="n">📝</span>Tích chọn để ghi note chuẩn</div>
+            <div class="form" id="noteForm">
+              <div><span class="flabel">1. Loài nuôi</span><div class="chips" data-g="loai" data-type="radio">Tôm thẻ|Tôm sú|Cá|Ếch|Lươn|Ốc|Loài khác</div></div>
+              <div><span class="flabel">2. Loại ao</span><div class="chips" data-g="ao" data-type="checkbox">Ao bạt|Ao đất|Ao lắng|Quảng canh / vuông|Tôm – lúa</div>
+                <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap" class="field"><input class="inline-in" id="nSoAo" type="number" min="1" placeholder="Số ao" style="width:90px"><input class="inline-in" id="nM3" type="number" min="0" placeholder="m³ / ao" style="width:120px"></div>
+              </div>
+              <div><span class="flabel">3. Giai đoạn</span><div class="chips" data-g="gd" data-type="radio">Chưa thả|Đang nuôi|Hết vụ / treo ao</div>
+                <div class="field" style="margin-top:8px"><input class="inline-in" id="nGdInfo" placeholder="Ngày dự kiến thả / ngày tuổi tôm" style="width:100%"></div>
+              </div>
+              <div><span class="flabel">4. Nhu cầu</span><div class="chips" data-g="nc" data-type="checkbox">Xử lý trước thả|Xử lý định kỳ|Ao có mầm bệnh|Vệ sinh dụng cụ</div>
+                <div class="field" style="margin-top:8px"><input class="inline-in" id="nTrieuChung" placeholder="Dấu hiệu ao / tôm (nếu có)" style="width:100%"></div>
+              </div>
+              <div><span class="flabel">5. Kết quả cuộc gọi</span><div class="chips" data-g="kq" data-type="radio">Chốt|Hẹn gọi lại|Từ chối|Không nghe máy|Thuê bao / sai số</div>
+                <div class="field" style="margin-top:8px"><input class="inline-in" id="nHen" placeholder="Hẹn lúc mấy giờ, ngày nào / số can đã chốt" style="width:100%"></div>
+              </div>
+              <div><span class="flabel">6. Lý do chưa mua</span><div class="chips" data-g="ld" data-type="checkbox">Giá cao|So tím bột / thuốc tím|Hỏi người nhà|Chưa thả / tham khảo|Có nguồn mua khác|Không nhu cầu</div></div>
+              <div><span class="flabel">7. Kênh tiếp theo</span><div class="chips" data-g="kenh" data-type="checkbox">Đã kb Zalo|Đã gửi video|Đã gửi bảng giá|Đã nhắn SMS</div></div>
+              <div class="field"><label for="nTinh">8. Tỉnh / huyện (ghi cả khi chưa chốt)</label><input id="nTinh" placeholder="VD: Cầu Ngang, Trà Vinh"></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div class="card" style="margin:0">
+              <div class="sec-title"><span class="n">📋</span>Note để dán vào USU</div>
+              <pre class="msg" id="noteOut"></pre>
+              <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+                <button class="btn" id="noteCopy">📋 Sao chép note</button>
+                <button class="btn ghost" id="noteReset">↺ Cuộc gọi mới</button>
+              </div>
+              <div id="noteTip" style="margin-top:14px"></div>
+            </div>
+            <div class="card" style="margin:0">
+              <div class="sec-title"><span class="n">☑️</span>Checklist trước khi cúp máy</div>
+              <div class="progress"><i id="ckBar"></i></div>
+              <ul class="checklist" id="checklist"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. PERSONAS -->
+      <section class="page" id="p-persona">
+        <div class="grid g4" id="personaGrid"></div>
+        <div class="card"><div class="note teal">Đơn có địa chỉ T11: 50% đến từ 6 tỉnh mục tiêu (Sóc Trăng, Cà Mau, Bạc Liêu, Bến Tre, Trà Vinh, Kiên Giang). <b>Long An</b> có 12 đơn dù ngoài vùng mục tiêu, đề xuất thêm vào target.</div></div>
+      </section>
+
+      <!-- 9. SEASON -->
+      <section class="page" id="p-season">
+        <div class="card">
+          <div class="sec-title"><span class="n">🌊</span>Giai đoạn ao &amp; cách mở lời</div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+        <div class="card">
+          <div class="sec-title"><span class="n">📅</span>Lịch thả giống tôm theo tỉnh (tháng dương lịch)</div>
+          <div class="note" style="margin-bottom:12px">Theo khung lịch thời vụ chính thức <b>gần nhất tìm được</b> (2024–2026) của Sở Nông nghiệp các tỉnh. Lịch mỗi năm có thể thay đổi theo độ mặn, mưa. Từ 2025 nhiều tỉnh đã sáp nhập nên ghi cả tên tỉnh cũ (bà con vẫn quen gọi). Tỉnh chưa có lịch chính thức: Leader bật <b>✏️ Sửa thông tin</b> và điền trực tiếp vào ô tháng.</div>
+          <div class="legend">
+            <span><i style="background:var(--brand-600)"></i>Khung thả giống khuyến cáo</span>
+            <span><i style="background:repeating-linear-gradient(45deg,#e8f7f8,#e8f7f8 4px,#cfeef0 4px,#cfeef0 8px)"></i>Thả rải vụ được khi đủ điều kiện (độ mặn, ao lắng)</span>
+            <span><i style="background:var(--brand-100)"></i>Đang nuôi tôm</span>
+            <span><i style="background:#e6f4dc"></i>Vụ lúa (ruộng tôm – lúa)</span>
+            <span><i style="background:var(--gold-50)"></i>Hạn thu hoạch dứt điểm</span>
+          </div>
+          <div class="tbl-wrap"><table class="cal" id="calTbl"></table></div>
+          <div class="srcs" id="calSrc"></div>
+        </div>
+        <div class="card">
+          <div class="sec-title"><span class="n">⚠️</span>Tháng dễ có dịch bệnh trên tôm – miền Nam</div>
+          <p class="small muted" style="margin-bottom:10px">Theo hướng dẫn phòng, chống bệnh tôm nước lợ của Cục Thủy sản và Kiểm ngư (2026). Dùng để <b>mở lời đúng lúc</b>: trước các tháng này, nhắc khách xử lý nước ao lắng trước thả và xử lý nước định kỳ.</p>
+          <div class="legend"><span><i style="background:#f6c9c4"></i>Bùng phát mạnh</span><span><i style="background:#fbe3e0"></i>Mùa khô / giao mùa, cần chú ý</span></div>
+          <div class="tbl-wrap"><table class="cal" id="riskTbl"></table></div>
+        </div>
+      </section>
+
+      <!-- 10. GLOSSARY -->
+      <section class="page" id="p-gloss">
+        <div class="card">
+          <div class="note teal" style="margin-bottom:14px">Từ ngữ bà con miền Tây hay dùng khi nói chuyện về ao, vuông, con giống, con nước. Sale nghe khách nói từ nào chưa rõ thì tra ở đây, rồi hỏi lại khách cho chắc. Mỗi vùng có thể gọi khác nhau.</div>
+          <div class="gl-tools">
+            <input id="glSearch" type="search" placeholder="🔎 Tìm từ: vuông, post, con nước, tấc…">
+            <div class="chips" id="glCats"></div>
+          </div>
+          <div id="glList"></div>
+        </div>
+        <div class="card">
+          <div class="sec-title"><span class="n">✍️</span>Từ địa phương sale gặp thêm</div>
+          <p class="small muted" style="margin-bottom:10px">Bật <b>✏️ Sửa thông tin</b> để ghi thêm từ mới khách hay dùng.</p>
+          <div class="tbl-wrap"><table id="glNew"></table></div>
+        </div>
+      </section>
+
+      <!-- 10. QUOTE -->
+      <section class="page" id="p-quote">
+        <div class="grid g2">
+          <div class="card">
+            <div class="sec-title"><span class="n">🧮</span>Thông tin đơn</div>
+            <div class="form">
+              <div class="field"><label for="qName">Tên khách</label><input id="qName" placeholder="VD: Anh Tư"></div>
+              <div class="grid g2" style="gap:14px">
+                <div class="field"><label for="qPhone">Số điện thoại</label><input id="qPhone" inputmode="tel" placeholder="09xx xxx xxx"></div>
+                <div class="field"><label for="qAddr">Địa chỉ giao</label><input id="qAddr" placeholder="Ấp, xã, huyện, tỉnh"></div>
+              </div>
+              <div class="field"><label for="qTier">Gói theo bảng giá</label><select id="qTier"></select></div>
+              <div class="field"><label for="qDisc">Ưu đãi thêm (đ) – Data bào / Leader duyệt</label><input id="qDisc" type="number" min="0" value="0"></div>
+              <div class="field"><label for="qNote">Ghi chú giao hàng</label><textarea id="qNote" placeholder="VD: giao tận ao, gọi trước khi giao"></textarea></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:18px">
+            <div class="total">
+              <div class="row"><span>Số can mua</span><b id="tCan">–</b></div>
+              <div class="row"><span>Khuyến mãi</span><b id="tGift">–</b></div>
+              <div class="row"><span>Tổng số lít nhận</span><b id="tLit">–</b></div>
+              <div class="row"><span>Giá gốc</span><b id="tOrig">–</b></div>
+              <div class="row"><span>Ưu đãi thêm</span><b id="tDisc">0đ</b></div>
+              <div class="row big"><span>Tổng thanh toán</span><b id="tTotal">0đ</b></div>
+            </div>
+            <div class="card" style="margin:0">
+              <div class="sec-title"><span class="n">💬</span>Tin nhắn xác nhận đơn</div>
+              <pre class="msg" id="msgOut"></pre>
+              <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+                <button class="btn" id="btnCopyMsg">📋 Sao chép tin nhắn</button>
+                <button class="btn ghost" id="btnReset">↺ Làm mới</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SRC = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+const PAGES = [
+  {id:'product',  ic:'📦', name:'1. Thông Tin Sản Phẩm', title:'1. THÔNG TIN SẢN PHẨM SÁT KHUẨN TÍM TITAN', desc:'Theo giấy phép Cục Thú y & bảng thông tin sản phẩm'},
+  {id:'price',    ic:'💰', name:'2. Bảng Giá & Combo',   title:'2. BẢNG GIÁ & KHUYẾN MÃI', desc:'1 can và Combo 3 – so giá mỗi lít để thuyết phục khách'},
+  {id:'dose',     ic:'🧪', name:'3. Liều Dùng & Chi Phí',title:'3. LIỀU DÙNG & TÍNH CHI PHÍ THEO M³', desc:'Hỏi m³ trước, báo chi phí mỗi lần xử lý sau'},
+  {id:'inbox',    ic:'💬', name:'4. Kịch Bản Inbox',     title:'4. KỊCH BẢN TRỰC INBOX MESSENGER', desc:'Mục tiêu: loài nuôi + SĐT + khung giờ nghe máy'},
+  {id:'call',     ic:'📞', name:'5. Kịch Bản Gọi Điện',  title:'5. KỊCH BẢN SALES GỌI ĐIỆN', desc:'Cuộc gọi đầu quyết định 78% đơn'},
+  {id:'objection',ic:'🛡️', name:'6. Xử Lý Từ Chối',      title:'6. XỬ LÝ TỪ CHỐI THEO LÝ DO MẤT ĐƠN THẬT', desc:'Từ 641 sale note chưa ra đơn tháng 11'},
+  {id:'note',     ic:'📝', name:'7. Ghi Note Cuộc Gọi',  title:'7. GHI NOTE CUỘC GỌI – TÍCH CHỌN', desc:'Tích chọn → ra note chuẩn 8 mục để dán vào USU'},
+  {id:'persona',  ic:'👥', name:'8. Chân Dung Khách',    title:'8. CHÂN DUNG KHÁCH & TỆP CHỐT TỐT', desc:'Ưu tiên đúng người, nói đúng nhu cầu'},
+  {id:'season',   ic:'📅', name:'9. Mùa Vụ Ao',          title:'9. GIAI ĐOẠN AO & LỊCH THẢ GIỐNG', desc:'Biết khách đang ở giai đoạn nào để mở lời đúng'},
+  {id:'gloss',    ic:'📖', name:'10. Từ Điển Nghề Tôm',  title:'10. TỪ ĐIỂN NGHỀ NUÔI TÔM MIỀN TÂY', desc:'Hiểu đúng từ bà con hay dùng để tư vấn tự nhiên'},
+  {id:'quote',    ic:'🧾', name:'11. Báo Giá Nhanh',     title:'11. BÁO GIÁ NHANH & TIN NHẮN CHỐT ĐƠN', desc:'Chọn gói theo bảng giá, tạo tin nhắn xác nhận'}
+];
+
+// Chỉ công khai 2 mức để so giá mỗi lít. Các mốc combo cao không đưa lên trang (bảng giá chưa thống nhất giữa sale và digital).
+// [số can, -, -, -, giá bán, khuyến mãi, số can tặng]
+const TIERS = [
+  [1,0,0,0,1325000,'+ 01 men tiêu hóa',0],
+  [3,0,0,0,3600000,'Tặng 01 can 5L',1]
+];
+
+const INBOX = [
+  {step:'Bước 1', stage:'Chào & hỏi loài nuôi\n(khách vừa nhắn từ quảng cáo)',
+   say:'Chào ngắn, hỏi ngay loài nuôi để lọc data. Chưa nói giá.',
+   q:['Dạ chào anh, em bên Thủy Sản Miền Nam, sản phẩm sát khuẩn Tím TiTan nè. Anh đang nuôi tôm, cá hay con gì vậy anh?'],
+   h:'Khách hỏi giá ngay → KHÔNG báo giá, chuyển sang câu "Khách hỏi giá" ở Bước 3.'},
+  {step:'Bước 2', stage:'Khai thác ao',
+   say:'Hỏi từng câu: loại ao, diện tích, giai đoạn. Đừng hỏi dồn.',
+   q:['Ao anh là ao bạt hay ao đất, có ao lắng không anh?','Mình nuôi mấy ao, diện tích tầm bao nhiêu anh?','Anh chuẩn bị thả hay tôm thả được bao lâu rồi?'],
+   h:'Khách trả lời chung chung → gợi ý sẵn: "Anh cần xử lý ao lắng trước thả, xử lý định kỳ, hay ao đang có vấn đề?"'},
+  {step:'Bước 3', stage:'Khách hỏi giá\n(chưa có SĐT)',
+   say:'Không báo giá. Lý do: giá có nhiều mức ưu đãi theo số can và theo ao, kỹ thuật gọi tính đúng cho ao khách.',
+   q:['Dạ bên em đang có ưu đãi tặng thêm can theo số lượng, mỗi ao dùng liều khác nhau nên em không dám báo đại. Anh để lại số điện thoại, kỹ thuật gọi tính liều và báo giá ưu đãi đúng cho ao anh liền nha.','Dạ giá bên em tính theo số can và ao mình xử lý bao nhiêu m³ nước. Anh cho em xin số, em gọi báo giá luôn trong vài phút anh.'],
+   h:'Khách nhất quyết đòi giá trước → nhắc lại "có ưu đãi tặng can, gọi 2 phút là có giá đúng cho ao anh". Vẫn không cho số → xin Zalo. Tuyệt đối không gửi bảng giá khi chưa có số.'},
+  {step:'Bước 4', stage:'Xin SĐT + khung giờ nghe máy',
+   say:'Xin số kèm giờ tiện nghe. Đây là điểm quyết định: 27% data mất vì gọi không được.',
+   q:['Mỗi ao liều mỗi khác, anh cho em xin số điện thoại, kỹ thuật bên em gọi tính liều và báo giá ưu đãi cho ao anh nha. Anh tiện nghe máy giờ nào anh?'],
+   h:'Khách ngại cho số → "Dạ kỹ thuật chỉ gọi tính liều, báo giá thôi anh, anh chưa cần mua liền đâu." Xin luôn Zalo nếu khách hay bận.'},
+  {step:'Bước 5', stage:'Sau khi có SĐT\n(được báo giá)',
+   say:'Có số rồi mới báo giá. Báo gọn, đẩy combo, rồi hẹn kỹ thuật gọi.',
+   q:['Dạ em cảm ơn anh. Giá 1 can 5 lít là 1.325.000đ, bên em đang ưu đãi 3 can 3.600.000đ tặng thêm 1 can. Khoảng [giờ] kỹ thuật gọi tính liều cho ao anh, anh để ý điện thoại giúp em nha.'],
+   h:'Chuyển Sales ngay, không giữ data. Data về 21h–06h: nhắn chào trước, hẹn gọi 6:30 sáng. Ghi vào USU: loài · loại ao · m³ · giai đoạn · giờ tiện nghe.'}
+];
+
+const CALL = [
+  {step:'1. Chào hỏi', stage:'Chào & lý do gọi\n(gọi trong 15 phút)',
+   say:'Xưng tên, tên công ty, nhắc khách đã quan tâm và để lại số.',
+   q:['Dạ em chào anh [tên], em là [tên] bên Thủy Sản Miền Nam á anh. Em thấy anh quan tâm sản phẩm sát khuẩn Tím TiTan bên em và có để lại số điện thoại, nên em gọi lại tư vấn và báo giá can 5 lít Tím TiTan cho mình ạ.'],
+   h:'Khách bận → hẹn giờ cụ thể, ghi USU. Không nghe máy → lần 2 gọi khung giờ khác (6:30–7:30 hoặc 17–19h) + nhắn Zalo/SMS song song.'},
+  {step:'2. Khai thác', stage:'Hỏi ao TRƯỚC khi báo giá',
+   say:'Hỏi đủ 4 câu, ghi vào note. Đủ thông tin mới báo giá.',
+   q:['Hiện tại anh/chị đang nuôi tôm hay cá ạ?','Mình nuôi khoảng mấy ao, diện tích tầm bao nhiêu, nước sâu khoảng mấy tấc anh/chị?','Ao mình đang ở giai đoạn nào rồi ạ? Mình xử lý ao lắng hay xử lý trực tiếp vào ao nuôi ạ?','Mình muốn xử lý khuẩn định kỳ, hay ao đang có vấn đề gì ạ?'],
+   h:'Có diện tích + độ sâu → mở mục "Liều Dùng & Chi Phí" tính ngay số lít và chi phí cho ao khách.'},
+  {step:'3. Giới thiệu', stage:'Giới thiệu ngắn gọn\n(dưới 1 phút)',
+   say:'Nói 4 ý: là gì – dùng sao – để làm gì – vì sao yên tâm.',
+   q:['Dạ Tím TiTan là dòng sát khuẩn chuyên xử lý khuẩn, nấm, ký sinh trùng trong nước ao nuôi của công ty bên em.','Sản phẩm dạng nước, nhận về dùng trực tiếp: 1 lít pha với 50 lít nước rồi tạt đều xuống ao, không phải pha chế lỉnh kỉnh.','Dùng để sát trùng nước và môi trường ao nuôi, diệt khuẩn, nấm gây hại cho tôm cá, hạn chế mầm bệnh trong ao. Sát trùng được cả dụng cụ, bể ương.','Có 2 hoạt chất Glutaraldehyde và BKC, có giấy phép lưu hành của Cục Thú y, anh yên tâm.'],
+   h:'Khách hỏi "có phải thuốc tím không" → "Dạ không phải thuốc tím KMnO4 đâu anh, đây là sát khuẩn dạng nước, liều tính theo m³ nước."'},
+  {step:'4. Hướng dẫn', stage:'Hướng dẫn sử dụng\n(theo đúng ao khách)',
+   say:'Chọn đúng liều theo giai đoạn khách vừa nói. Nhắc 3 lưu ý khi đánh.',
+   q:['Xử lý ao lắng, ao nuôi trước khi thả: 1 lít cho 2.000m³ nước.','Xử lý nước ao định kỳ: 1 lít cho 4.000m³ nước, 7–10 ngày một lần.','Khi ao có mầm bệnh: 1 lít cho 3.000m³ nước, dùng 5–7 ngày.','Anh đánh vào buổi sáng có nắng, cắt 1 cữ cho ăn sáng. Chỉ đánh lúc tôm cá đang đói, không đánh lúc mới ăn no, nhớ tăng oxy. Sau 2–3 ngày đánh lại vi sinh để ổn định hệ vi sinh ao.'],
+   h:'Vệ sinh bể, dụng cụ: 6ml/m³, ngâm 10 giờ rồi rửa sạch. Bể nước đứng / chảy chậm: 100ml cho 50–70m³. Ao ốc chỉ dùng 1/3 – 1/4 liều.'},
+  {step:'5. Báo giá', stage:'💰 Báo chi phí theo m³,\nrồi mới báo can',
+   say:'Báo chi phí mỗi lần xử lý cho ao khách trước, giá can sau, rồi đưa combo.',
+   q:['Ao anh [m³] thì mỗi lần xử lý chỉ tốn khoảng [chi phí], một can 5 lít dùng được khoảng [số lần] lần cho ao anh.','Giá 1 can 5 lít là 1.325.000đ tặng kèm men tiêu hóa. Anh lấy 3 can 3.600.000đ được tặng thêm 1 can, tính ra mỗi lít chỉ 180 nghìn.','Sản phẩm bảo quản được tới 2 năm. Trong thời hạn sử dụng có hư hỏng bên em đổi can mới cho mình.'],
+   h:'Khách vẫn chần chừ → chốt 1 can dùng thử cho ao lắng. Ưu đãi thêm cho data cũ: xem cột Data bào trong Bảng Giá.'},
+  {step:'6. Ưu đãi', stage:'⏳ Thời gian ưu đãi',
+   say:'Tạo lý do chốt hôm nay, nói đúng thời hạn ưu đãi thật.',
+   q:['Ưu đãi tặng can này bên em chỉ áp dụng trong đợt này thôi anh/chị.','Ao mình trước sau gì cũng phải xử lý khuẩn, nấm trong nước, nên lấy đợt ưu đãi này lợi hơn nhiều, vừa được giảm giá vừa được tặng thêm can sử dụng ạ.'],
+   h:'Chỉ nói hạn ưu đãi khi Leader đã chốt thời hạn thật. Ghi hạn vào ô "Bảng giá áp dụng" ở mục Bảng Giá.'},
+  {step:'7. So chi phí', stage:'🟣 Khách đang dùng tím bột / KMnO4',
+   say:'Không chê sản phẩm khác. Tính chi phí trên m³ để khách tự so.',
+   q:['Dạ anh đang dùng tím bột bao nhiêu ký cho 1 ao vậy anh? Thường 1kg xử lý được khoảng 250–500m³ nước, muốn xử lý 5.000m³ là phải cỡ 10kg, khoảng 1,6 triệu rồi anh.','Còn Tím TiTan xử lý 5.000m³ trước thả chỉ cần 2,5 lít, chưa tới nửa can, giá ổn định không lo đội giá, dạng nước nhận về dùng liền.'],
+   h:'Chi phí Tím TiTan: 5.000m³ trước thả = 2,5 lít ≈ 660.000đ theo giá 1 can, ≈ 450.000đ theo combo 3 can. Dùng mục Liều Dùng để tính cho đúng ao khách.'},
+  {step:'8. Suy nghĩ thêm', stage:'🤔 Khách "để anh suy nghĩ"',
+   say:'Tạo niềm tin: khách cùng khu vực đã dùng, kỹ thuật hỗ trợ, Zalo.',
+   q:['Dạ khu vực anh cũng có mấy anh nuôi tôm ở [huyện/xã] đã dùng bên em rồi á anh.','Khi sử dụng anh chụp lại vài hình ao nhà mình để đối chứng. Bên em có bộ phận kỹ thuật hỗ trợ suốt quá trình dùng, khu vực anh kỹ thuật bên em hay có chuyến công tác, tiện đường ghé trực tiếp ao nhà mình luôn ạ.','Anh kết bạn Zalo số này giúp em, em gửi thêm thông tin sản phẩm, phản hồi của khách đã dùng. Có gì anh gọi em hỗ trợ, bên em không phải bán xong là thôi mà còn hỗ trợ anh nhiều mùa vụ tiếp theo, sản phẩm phải chất lượng thì sau này anh mới mua tiếp ạ.'],
+   h:'Chỉ nêu khu vực (huyện/xã), không đọc tên đầy đủ hay SĐT của khách khác. Hẹn giờ gọi lại cụ thể, ghi USU.'},
+  {step:'9. Chốt đơn', stage:'✅ Chốt & giữ kết nối',
+   say:'Xin địa chỉ, xác nhận SĐT nhận hàng, gửi xác nhận đơn, kết bạn Zalo.',
+   q:['Dạ anh cho em xin địa chỉ nhận hàng, và số điện thoại này mình nhận hàng luôn phải không ạ?','Em xác nhận đơn hàng của mình qua tin nhắn Facebook hoặc Zalo. Anh nhận hàng được kiểm tra trước khi thanh toán. Trong quá trình dùng có thắc mắc gì về sản phẩm hay kỹ thuật xử lý ao, anh cứ nhắn hoặc gọi Zalo để kỹ thuật bên em hỗ trợ anh ạ.'],
+   h:'Cập nhật trạng thái chốt lên USU ngay. Gửi tin xác nhận ở mục Báo Giá Nhanh. Note có kết bạn Zalo chốt 12% so với 6% khi chỉ gọi.'},
+  {step:'10. Gọi lại', stage:'🔄 Lần 2 và lần 3',
+   say:'Lần 2: khác khung giờ. Lần 3: KHÔNG gọi lặp cùng kịch bản.',
+   q:['Dạ em gọi lại theo hẹn nè anh. Hôm trước em có gửi video cách dùng qua Zalo, anh coi chưa anh?'],
+   h:'Sau 2 lần không nghe → chuyển nhóm remarketing / nhắn Zalo, không gọi lặp. Lần 3 phải có lý do mới: ưu đãi Data bào, ngày thả tới gần.'}
+];
+
+const OBJ = [
+  {e:'📵', t:'Không liên lạc được / tắt ngang', pct:'27%', n:'172 data',
+   quote:'"knm", "thuê bao", "nghe giá tắt ngang", "zalo chặn"',
+   steps:['Lần 1–2 gọi khác khung giờ: sáng sớm 6:30–7:30, chiều tối 17–19h.','Song song nhắn Zalo/SMS giới thiệu ngắn.','Sau 2 lần không nghe → chuyển remarketing, không gọi lặp.','Inbox phải xin khung giờ tiện nghe máy ngay từ đầu.'],
+   say:'Dạ em là kỹ thuật sát khuẩn Tím TiTan, anh có hỏi về xử lý ao. Em gửi anh cách dùng và chi phí theo m³, anh rảnh thì gọi lại em nha.'},
+  {e:'💸', t:'Chê giá cao', pct:'20%', n:'127 data · note "giá cao" chỉ chốt 6%',
+   quote:'"can hơn triệu luôn hả", "nghe giá dội", "nuôi thưa giá này dùng không nổi"',
+   steps:['Hỏi m³ TRƯỚC khi báo giá.','Báo theo m³: "ao 3.000m³, xử lý định kỳ mỗi lần khoảng 200 nghìn".','So với thiệt hại: một lần ao có mầm bệnh là ảnh hưởng cả vụ.','Đưa combo 3 can (tặng 1 can, 180k/lít).','Vẫn chần chừ → chốt 1 can dùng thử cho ao lắng.'],
+   say:'Dạ anh tính giúp em: 1 lít xử lý được 4.000m³ nước định kỳ. Ao anh 3.000m³ thì mỗi lần chưa tới 200 nghìn, rẻ hơn nhiều so với rủi ro cả vụ đó anh.'},
+  {e:'🤔', t:'Tham khảo / cân nhắc / chưa thả', pct:'15%', n:'93 data · chốt 4–7%',
+   quote:'"chưa thả tham khảo trước", "15 ngày nữa thả", "qua tết mới thả"',
+   steps:['Hỏi ngày dự kiến thả giống.','Đặt lịch gọi lại trước ngày thả 5–7 ngày, ghi USU.','Nhấn mạnh xử lý trước thả là lúc cần dùng nhất.','Đưa vào tệp remarketing Messenger 7–14 ngày.'],
+   say:'Dạ không sao anh. Anh dự tính ngày nào thả, em ghi lại, trước đó mấy ngày em gọi nhắc anh xử lý ao lắng cho kịp nha.'},
+  {e:'👨‍👩‍👦', t:'Hỏi ý vợ / chồng / anh em', pct:'6%', n:'36 data · chốt 9%',
+   quote:'"hỏi lại chồng", "bàn với anh em", "rủ thêm em"',
+   steps:['Xin kết bạn Zalo ngay trong cuộc gọi.','Gửi video + bảng chi phí để khách chuyển cho người nhà.','Hẹn giờ gọi lại cụ thể, gọi đúng giờ.'],
+   say:'Dạ anh kết bạn Zalo số này giúp em, em gửi video cách dùng với bảng chi phí, anh đưa chị coi luôn cho tiện nha.'},
+  {e:'🟣', t:'So với tím bột / thuốc tím', pct:'4%', n:'25 data · chốt 7%',
+   quote:'"mua loại có 100k", "đang xài tím bột 120k/kg"',
+   steps:['KHÔNG chê sản phẩm khác.','Nói về Tím TiTan: dạng nước, liều theo m³, có giấy phép Cục Thú y.','Hỏi khách đang dùng bao nhiêu cho 1 ao → tính chi phí trên m³ để khách tự so.'],
+   say:'Dạ anh đang dùng bao nhiêu ký cho 1 ao vậy anh? Em tính chi phí trên m³ của Tím TiTan cho anh so thử, anh thấy hợp thì mình dùng.'},
+  {e:'🏪', t:'Đang có nguồn mua khác', pct:'2%', n:'11 data',
+   quote:'"đại lý", "người quen", "đang dùng thuốc khác"',
+   steps:['Không chê hãng khác, không chê đại lý.','Đề xuất dùng thử 1 can cho 1 ao lắng.','Nhấn mạnh kỹ thuật tư vấn liều riêng cho ao + giao tận nơi.'],
+   say:'Dạ anh cứ dùng bên quen, anh lấy thử 1 can xử lý ao lắng rồi so, bên em có kỹ thuật tính liều riêng cho ao anh luôn.'}
+];
+
+const TIPS = {
+  'Giá cao':'Hỏi m³ → báo chi phí mỗi lần → combo 3 can (180k/lít) → còn chần chừ thì chốt 1 can thử ao lắng.',
+  'So tím bột / thuốc tím':'Không chê sản phẩm khác. Hỏi khách đang dùng bao nhiêu cho 1 ao, tính chi phí/m³ cho khách tự so.',
+  'Hỏi người nhà':'Kết bạn Zalo ngay, gửi video + bảng chi phí, hẹn giờ gọi lại cụ thể.',
+  'Chưa thả / tham khảo':'Hỏi ngày thả → hẹn gọi trước 5–7 ngày, ghi USU. Đưa vào remarketing 7–14 ngày.',
+  'Có nguồn mua khác':'Không chê. Đề xuất dùng thử 1 can cho 1 ao lắng.',
+  'Không nghe máy':'Lần sau gọi khác khung giờ (6:30–7:30 / 17–19h) + nhắn Zalo/SMS. Sau 2 lần → chuyển remarketing.',
+  'Thuê bao / sai số':'Nhắn Messenger xin lại số đúng. Sai số / không nhu cầu → đánh dấu để Marketing lọc tệp.'
+};
+
+const CHECK_CALL = ['Đã hỏi loài nuôi','Đã hỏi loại ao + m³ trước khi báo giá','Đã hỏi giai đoạn (ngày thả / ngày tuổi)','Đã báo chi phí theo m³ + giới thiệu combo 3 can','Đã xin kết bạn Zalo','Đã chốt kết quả hoặc hẹn giờ gọi lại cụ thể','Đã ghi note đủ 8 mục vào USU'];
+
+const PERSONA = [
+  {e:'🧑‍🌾', t:'Chủ ao nhỏ (< 1.000m³)', stat:'Chốt 31%', care:'Tiết kiệm, dễ dùng, sợ mất vụ', angle:'Chi phí mỗi lần xử lý chỉ vài chục nghìn; 1 can dùng được nhiều lần', tip:'Nhạy giá, hay quen đại lý → luôn báo theo m³ trước.'},
+  {e:'🏭', t:'Ao bạt / ao lắng / công nghệ', stat:'Chốt 35–36%', care:'Hiệu quả, ổn định, xử lý đúng quy trình', angle:'Xử lý ao lắng trước khi cấp nước, định kỳ 7–10 ngày, combo dùng cả vụ', tip:'Tệp chốt tốt nhất → gọi ưu tiên, đẩy combo 3 can trở lên.'},
+  {e:'🌾', t:'Quảng canh / vuông / tôm – lúa', stat:'Chốt 15%', care:'Chi phí thấp, diện tích lớn, ít đầu tư', angle:'Xử lý trước thả, liều theo m³ rõ ràng', tip:'Chốt thấp → không ép, hẹn theo mùa vụ.'},
+  {e:'🏪', t:'Đại lý vật tư / mua số lượng', stat:'Mua số lượng', care:'Chiết khấu, đầu ra', angle:'Hàng có giấy phép Cục Thú y, giá ổn định, giao tận nơi', tip:'Mua số lượng lớn → báo combo cao theo chính sách hiện hành, trao đổi trực tiếp, không đăng lên trang hay quảng cáo.'}
+];
+
+const SEASON = [
+  {e:'🏗️', c:'#7c3aed', t:'Trước thả / ao lắng', p:'Chốt 25–36%', u:'1L / 2.000m³', a:'"Xử lý ao lắng sạch khuẩn, nấm trước khi thả"'},
+  {e:'🔁', c:'#0e8a94', t:'Đang nuôi – định kỳ', p:'Chốt 31%', u:'1L / 4.000m³, 7–10 ngày/lần', a:'"Mỗi lần xử lý định kỳ chưa tới vài trăm nghìn"'},
+  {e:'🌧️', c:'#2563eb', t:'Mưa giao mùa', p:'Nước ao biến động', u:'Xử lý nước ao', a:'"Trời chuyển mưa – xử lý nước ao sớm"'},
+  {e:'⚠️', c:'#b42318', t:'Ao có mầm bệnh', p:'Chốt 21%', u:'1L / 3.000m³, 5–7 ngày', a:'Chỉ nói xử lý khuẩn, nấm trong nước ao'},
+  {e:'💤', c:'#a87b0c', t:'Hết vụ / treo ao', p:'Chốt 19%', u:'Sát trùng dụng cụ, chuẩn bị vụ mới', a:'Hẹn gọi lại trước vụ mới'}
+];
+
+
+/* ---------- lịch thả giống theo tỉnh ----------
+   Mã tháng (T1→T12): T = khung thả khuyến cáo · R = thả rải vụ khi đủ điều kiện · L = vụ lúa · H = hạn thu hoạch dứt điểm · - = không ghi
+   Dòng có edit:true là tỉnh chưa tìm được lịch chính thức → ô tháng sửa trực tiếp được. */
+const CAL = [
+  {g:'Cà Mau', old:'gồm Bạc Liêu cũ', rows:[
+    {k:'cm_tl', m:'Lúa – tôm (tôm sú, tôm càng xanh)', c:'LTTNNNNLLLLL', n:'Vụ lúa 2025–2026: xuống giống 20/8–30/9, thu hoạch cuối tháng 12 – đầu tháng 2. Tháng thả tôm suy ra từ lịch lúa: thả sau khi thu hoạch lúa, nuôi đến trước vụ lúa kế tiếp. Bạc Liêu cũ: khoảng 8 tháng tôm, 4 tháng lúa.', s:1},
+    {k:'cm_tc', m:'Thâm canh, ao bạt, quảng canh cải tiến, tôm – rừng', edit:true, n:'Chưa có khung lịch chính thức trong tài liệu tìm được. Leader điền theo thông báo mới của Sở NN&MT Cà Mau.'}
+  ]},
+  {g:'Sóc Trăng', old:'nay thuộc TP. Cần Thơ', rows:[
+    {k:'st_the', m:'Tôm thẻ chân trắng', c:'TTTTTTTTT---', n:'Khung 2025: thả từ 01/01 đến 01/10 (2024: 10/1 – 30/9).', s:2},
+    {k:'st_su', m:'Tôm sú', c:'--TTTTTT----', n:'Khung 2025: thả từ 01/3 đến 01/9 (2024: 15/3 – 30/9).', s:2},
+    {k:'st_tl', m:'Tôm – lúa (Mỹ Xuyên…)', c:'-------H----', n:'Thu hoạch tôm xong trước tháng 9 để kịp vụ lúa.', s:3},
+    {k:'st_ct', m:'Trang trại lớn, ao bạt, nuôi 2 giai đoạn', c:'RRRRRRRRRRRR', n:'Thả rải vụ quanh năm nhưng phải có ao chứa, xử lý nước trước. Hộ nhỏ không chủ động nước thì không thả khi thời tiết khắc nghiệt.', s:3}
+  ]},
+  {g:'Kiên Giang', old:'nay thuộc An Giang', rows:[
+    {k:'kg_umt', m:'Tôm sú – lúa (An Biên, An Minh, U Minh Thượng, Vĩnh Thuận, Gò Quao)', c:'TTTT---H----', n:'Khung 2025: thả tháng 1–4, thu hoạch dứt điểm trong tháng 8.', s:4},
+    {k:'kg_tglx', m:'Tôm sú – lúa (Hòn Đất, Kiên Lương, Giang Thành, Hà Tiên)', c:'-TTT---H----', n:'Khung 2025: thả từ đầu tháng 2 – tháng 4, thu hoạch dứt điểm trong tháng 8.', s:4},
+    {k:'kg_tcx', m:'Tôm càng xanh xen lúa', c:'---TTTTT----', n:'Khung 2025: thả tháng 4–8, thu hoạch sau 5–6 tháng nuôi.', s:4},
+    {k:'kg_qc', m:'Quảng canh cải tiến, tôm – cua – cá, tôm – rừng', c:'RRRRRRRRRRRR', n:'Thả quanh năm, ngắt vụ tối thiểu 30 ngày, tẩy trùng ít nhất 1 lần/năm.', s:4},
+    {k:'kg_tc', m:'Thâm canh, bán thâm canh, công nghệ cao', c:'RRRRRRRRRRRR', n:'Thả quanh năm khi độ mặn trong nước phù hợp.', s:4}
+  ]},
+  {g:'Bến Tre', old:'nay thuộc Vĩnh Long', rows:[{k:'bt', m:'Tôm sú, tôm thẻ', edit:true, n:'Chưa tìm được khung lịch chính thức. Leader điền theo thông báo của Sở NN&MT.'}]},
+  {g:'Trà Vinh', old:'nay thuộc Vĩnh Long', rows:[{k:'tv', m:'Tôm sú, tôm thẻ', edit:true, n:'Chưa tìm được khung lịch chính thức. Leader điền theo thông báo của Sở NN&MT.'}]},
+  {g:'Long An', old:'nay thuộc Tây Ninh', rows:[{k:'la', m:'Tôm thẻ (Cần Giuộc, Cần Đước)', edit:true, n:'Chưa tìm được khung lịch chính thức. Leader điền theo thông báo của Sở NN&MT.'}]}
+];
+const CAL_SRC = [
+  ['Sở NN&MT Cà Mau – TB 23/TB-SNNMT ngày 21/7/2025: lịch thời vụ lúa tôm 2025–2026','https://storage-vnportal.vnpt.vn/cmu-khdn/5342/Vanban/lich-thoi-vu-lua-tom.pdf'],
+  ['Sở NN&PTNT Sóc Trăng – khung lịch thời vụ thả nuôi tôm nước lợ 2025','https://sonnptnt.soctrang.gov.vn/SiteFolders/snnptnt/4714/276-TB-SNN.pdf'],
+  ['Báo Nông nghiệp & Môi trường – Khung thời vụ thả giống tôm nước lợ 2024 (Sóc Trăng)','https://nongnghiepmoitruong.vn/khung-thoi-vu-tha-giong-tom-nuoc-lo-2024-ung-pho-han-man-d374732.html'],
+  ['Báo Nông nghiệp & Môi trường – Kiên Giang thả giống tôm nước lợ từ tháng 1/2025','https://nongnghiepmoitruong.vn/kien-giang-bat-dau-tha-giong-nuoi-tom-nuoc-lo-tu-thang-1-2025-d415193.html']
+];
+const RISK = [
+  {t:'Đốm trắng', c:'DDD-------DD', lv:'D3', n:'Miền Nam bùng phát mạnh tháng 11 – 3 năm sau, lúc giao mùa, thời tiết thay đổi đột ngột.'},
+  {t:'Hoại tử gan tụy cấp (tôm chết sớm)', c:'--DDDDDD----', lv:'D3', n:'Mạnh nhất mùa nắng nóng tháng 3 – 8, nước trên 30°C. Hay gặp 10–45 ngày đầu sau thả.'},
+  {t:'Taura (đỏ thân)', c:'--DDDD------', lv:'D3', n:'Mùa khô tháng 3 – 6, tôm thẻ lột xác rộ 10–40 ngày sau thả.'},
+  {t:'Hoại tử cơ quan tạo máu (IHHN)', c:'--DDDDD-----', lv:'D2', n:'Mùa khô tháng 3 – 7, 10–20 ngày đầu sau thả.'},
+  {t:'Hoại tử cơ (đục cơ)', c:'---DDD--DD--', lv:'D2', n:'Tháng 4 – 6 và 9 – 10, sau sốc môi trường như tảo tàn, pH biến động.'},
+  {t:'Đầu vàng', c:'----DD------', lv:'D2', n:'Đầu mùa mưa, giao mùa, độ mặn giảm đột ngột (khoảng tháng 5 – 6).'},
+  {t:'Vi bào tử trùng EHP, phân trắng', c:'DDDD-------D', lv:'D2', n:'Mùa khô, nắng nóng kéo dài, nước trên 30°C, độ mặn cao.'}
+];
+function renderCalendar(){
+  const head = '<thead><tr><th>Tỉnh / mô hình nuôi</th>' + Array.from({length:12},(_,i)=>`<th class="m">T${i+1}</th>`).join('') + '<th>Ghi chú</th></tr></thead>';
+  let h = head + '<tbody>';
+  CAL.forEach(g => {
+    h += `<tr class="grp"><td colspan="14">📍 ${esc(g.g)} <small>(${esc(g.old)})</small></td></tr>`;
+    g.rows.forEach(r => {
+      const cells = Array.from({length:12},(_,i) => {
+        if(r.edit) return `<td class="m">${ed('cal_'+r.k+'_'+(i+1),'','·')}</td>`;
+        const code = r.c[i]; const lbl = {T:'Thả',R:'Rải',L:'Lúa',H:'Thu',N:'Nuôi'}[code] || '';
+        return `<td class="m ${code==='-'?'':code}">${lbl}</td>`;
+      }).join('');
+      const src = r.s ? ` <a href="${CAL_SRC[r.s-1][1]}" target="_blank" rel="noopener" title="${esc(CAL_SRC[r.s-1][0])}">[${r.s}]</a>` : '';
+      h += `<tr><td class="p">${esc(r.m)}</td>${cells}<td class="nt">${ed('cal_'+r.k+'_note', r.n)}${src}</td></tr>`;
+    });
+  });
+  $('#calTbl').innerHTML = h + '</tbody>';
+  $('#calSrc').innerHTML = '<b>Nguồn:</b>' + CAL_SRC.map((s,i)=>`<span>[${i+1}] <a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></span>`).join('');
+  let r = '<thead><tr><th>Bệnh / hội chứng</th>' + Array.from({length:12},(_,i)=>`<th class="m">T${i+1}</th>`).join('') + '<th>Khi nào hay gặp</th></tr></thead><tbody>';
+  RISK.forEach(x => { r += `<tr><td class="p">${esc(x.t)}</td>` + Array.from({length:12},(_,i)=>`<td class="m ${x.c[i]==='D'?x.lv:''}"></td>`).join('') + `<td class="nt">${esc(x.n)}</td></tr>` });
+  $('#riskTbl').innerHTML = r + '</tbody>';
+}
+
+/* ---------- từ điển nghề tôm ---------- */
+const GLOSS = [
+  ['🏞️ Ao & mô hình nuôi', [
+    ['Vuông / vuông tôm','"Nhà có 2 vuông, mỗi vuông 3 công"','Khu đất nuôi tôm có bờ bao, mương bao và cống lấy nước, phổ biến ở Cà Mau, Bạc Liêu. Thường nuôi quảng canh, quảng canh cải tiến.','Hỏi diện tích mặt nước và độ sâu mương để tính m³.'],
+    ['Đìa','"Đìa tôm", "tát đìa"','Ao, hầm đào để nuôi tôm cá. "Tát đìa" là tát cạn nước để bắt.',''],
+    ['Mương / trảng','"Mương sâu 1 mét, trảng cạn"','Mương là phần đào sâu bao quanh vuông, trảng là mặt ruộng cạn ở giữa. Nước trên trảng cạn hơn mương nhiều.','Tính m³ riêng cho mương và trảng rồi cộng lại.'],
+    ['Cống / bọng','"Mở bọng lấy nước"','Cống lấy nước và xả nước của vuông, mở đóng theo con nước.',''],
+    ['Ao lắng','"Có ao lắng không anh?"','Ao chứa nước để lắng, xử lý sạch trước khi cấp vào ao nuôi.','Đây là lúc dùng Tím TiTan nhiều nhất: 1 lít / 2.000m³.'],
+    ['Ao bạt (ao lót bạt)','"Ao bạt 2 lớp"','Ao lót bạt nhựa ở đáy và bờ, nuôi thâm canh, dễ vệ sinh, xi-phông.','Tệp chốt tốt (35%). Hỏi số ao và m³ mỗi ao.'],
+    ['Ao đất','"Nuôi ao đất truyền thống"','Ao đào không lót bạt. Đáy dễ tích bùn, cần cải tạo kỹ trước vụ.',''],
+    ['Ao tròn / bể nổi','"Nuôi bể tròn"','Ao hoặc bể tròn khung sắt lót bạt, có hố xi-phông giữa, nuôi mật độ rất cao.','Thể tích nhỏ, tính liều theo m³ bể.'],
+    ['Quảng canh','"Thả rồi để tôm ăn tự nhiên"','Nuôi mật độ thấp, tôm ăn thức ăn tự nhiên, thay nước theo con nước.',''],
+    ['Quảng canh cải tiến (QCCT)','"Nuôi cải tiến, thả bù"','Quảng canh có thả giống bổ sung nhiều đợt, có cho ăn thêm, cải tạo vuông kỹ hơn.',''],
+    ['Thâm canh / bán thâm canh','"Nuôi công nghiệp"','Nuôi mật độ cao (thâm canh) hoặc vừa (bán thâm canh), cho ăn thức ăn công nghiệp, có quạt oxy.',''],
+    ['Siêu thâm canh','"Nuôi công nghệ cao, nuôi 2–3 giai đoạn"','Nuôi mật độ rất cao trong ao bạt, ao tròn, quản lý nước chặt.',''],
+    ['Tôm – lúa (lúa – tôm)','"Con tôm ôm cây lúa"','Mùa khô nuôi tôm nước lợ, mùa mưa rửa mặn trồng lúa trên cùng ruộng.','Hỏi tôm đang ở tháng thứ mấy để biết còn bao lâu tới vụ lúa.'],
+    ['Tôm – rừng','"Nuôi dưới tán đước"','Nuôi tôm quảng canh dưới tán rừng ngập mặn, chủ yếu ở Cà Mau.',''],
+    ['Nuôi 2 giai đoạn / 3 giai đoạn','"Ương trước rồi mới san ra ao"','Ương tôm giống trong ao hoặc bể nhỏ một thời gian rồi mới chuyển ra ao nuôi lớn.',''],
+    ['Vèo / ương vèo','"Thả vô vèo 15 ngày"','Khung lưới quây một góc ao để ương tôm giống những ngày đầu.',''],
+    ['Hố xi-phông','"Ao có hố xi-phông giữa"','Hố ở giữa ao để gom và hút chất thải đáy ra ngoài.',''],
+    ['Cải tạo ao / sên vét / phơi đáy','"Đang sên vét, phơi đáy"','Hút bùn, phơi khô đáy, bón vôi để chuẩn bị vụ mới.','Khách đang cải tạo = sắp thả → hỏi ngày thả, hẹn gọi.'],
+    ['Treo ao','"Ao treo rồi em"','Để ao trống, không nuôi (sau khi hết vụ hoặc sau dịch).','Hẹn gọi lại trước vụ mới.'],
+    ['Ngắt vụ','"Nghỉ một tháng rồi mới thả lại"','Nghỉ nuôi giữa 2 vụ để cắt mầm bệnh. Kiên Giang khuyến cáo tối thiểu 30 ngày với quảng canh cải tiến.','']
+  ]],
+  ['🦐 Con giống', [
+    ['Tôm thẻ (thẻ chân trắng)','"Nuôi thẻ"','Loài tôm nuôi nhiều nhất ở ĐBSCL, nuôi thâm canh, ao bạt.',''],
+    ['Tôm sú','"Nuôi sú"','Tôm lớn con, nuôi nhiều ở vuông quảng canh, tôm – lúa, tôm – rừng.',''],
+    ['Tôm càng xanh','"Nuôi càng xanh trong ruộng lúa"','Tôm nước ngọt, hay nuôi xen ruộng lúa.',''],
+    ['Post / PL','"Mua giống post 12"','Tôm giống ở giai đoạn hậu ấu trùng. Số sau PL là số ngày tuổi: PL12 = 12 ngày.',''],
+    ['Giống sạch bệnh / SPF / giống kiểm dịch','"Giống có giấy kiểm dịch"','Giống từ tôm bố mẹ sạch bệnh, đã xét nghiệm và kiểm dịch.',''],
+    ['Mật độ','"Thả 100 con một mét"','Số con tôm thả trên mỗi m² mặt nước.',''],
+    ['Thả rộ / thả rải vụ','"Thả rộ đầu mùa", "thả rải quanh năm"','Thả rộ: cả vùng thả cùng lúc theo lịch. Thả rải vụ: thả nhiều đợt trong năm.','Xem lịch thả theo tỉnh ở mục Mùa Vụ Ao.']
+  ]],
+  ['💧 Nước & môi trường', [
+    ['Con nước / nước rong / nước kém','"Đợi con nước rong mới lấy nước"','Chu kỳ thủy triều. Nước rong: triều lên cao (triều cường). Nước kém: triều thấp. Bà con lấy nước, xổ nước theo con nước.','Đợt lấy nước mới = lúc cần xử lý nước.'],
+    ['Độ mặn (phần ngàn ‰)','"Nước mặn 15 phần ngàn"','Lượng muối trong nước, đo bằng phần ngàn. Tôm – lúa cần độ mặn dưới 2‰ mới xuống giống lúa.',''],
+    ['Lên mặn / ngọt hóa','"Mặn lên sớm"','Lên mặn: nước mặn vào sâu nội đồng. Ngọt hóa: vùng được đê, cống giữ nước ngọt.',''],
+    ['pH','"pH sáng chiều chênh nhiều"','Độ chua – kiềm của nước. Ao tôm thường giữ khoảng 7,5 – 8,3.',''],
+    ['Độ kiềm','"Kiềm thấp, tôm khó lột"','Khả năng giữ pH ổn định của nước.',''],
+    ['Oxy / DO','"Thiếu oxy ban đêm"','Lượng oxy hòa tan trong nước. Thấp thì tôm nổi đầu.','Nhắc khách tăng oxy khi đánh Tím TiTan.'],
+    ['Màu nước','"Nước xanh đọt chuối", "nước nâu", "nước trong veo"','Màu do tảo trong ao. Bà con nhìn màu nước để đoán tình trạng ao.',''],
+    ['Tảo tàn','"Tảo tàn, nước đổi màu"','Tảo chết đồng loạt làm nước đổi màu, dễ thiếu oxy, tôm bị sốc.',''],
+    ['Khí độc','"Đáy có mùi trứng thối"','Các khí NH3, NO2, H2S sinh ra từ thức ăn thừa, chất thải ở đáy ao.',''],
+    ['Giao mùa','"Trời giao mùa, mưa nắng thất thường"','Lúc chuyển mùa khô – mưa, nhiệt độ, độ mặn trong ao thay đổi mạnh.','Lúc nên nhắc xử lý nước ao.']
+  ]],
+  ['🧺 Chăm sóc hằng ngày', [
+    ['Cữ ăn / cắt cữ','"Ngày cho ăn 4 cữ", "cắt 1 cữ sáng"','Cữ là mỗi lần cho ăn trong ngày. Cắt cữ là bỏ một lần cho ăn.','Đánh Tím TiTan buổi sáng thì cắt 1 cữ ăn sáng.'],
+    ['Nhá / sàng ăn','"Kiểm tra nhá thấy còn thức ăn"','Sàng lưới đặt dưới ao để xem tôm ăn hết thức ăn chưa.',''],
+    ['Chài tôm','"Chài thử coi tôm"','Quăng chài bắt mẫu để xem cỡ tôm, sức khỏe.',''],
+    ['Quạt / sục khí','"Chạy quạt cả đêm"','Máy quạt nước, sục khí để tăng oxy cho ao.',''],
+    ['Xi-phông','"Xi-phông đáy mỗi ngày"','Hút chất thải, bùn đáy ra khỏi ao.',''],
+    ['Đánh thuốc / tạt','"Đánh vi sinh", "tạt thuốc"','Pha sản phẩm với nước rồi tạt đều xuống ao.','Tím TiTan: 1 lít pha 50 lít nước, tạt đều.'],
+    ['Men vi sinh','"Đánh vi sinh sau khi diệt khuẩn"','Chế phẩm vi sinh có lợi giúp ổn định nước, phân hủy chất thải.','Sau khi đánh Tím TiTan 2–3 ngày thì đánh lại vi sinh.'],
+    ['Lột (lột xác)','"Tôm lột rộ", "tôm mềm vỏ"','Tôm thay vỏ để lớn. Lúc lột tôm yếu, dễ bị ảnh hưởng.','']
+  ]],
+  ['⚠️ Dấu hiệu & bệnh', [
+    ['Tôm nổi đầu','"Sáng ra tôm nổi đầu"','Tôm nổi lên mặt nước, thường do thiếu oxy.',''],
+    ['Tấp mé / tấp bờ','"Tôm tấp mé"','Tôm dạt vào bờ, bơi lờ đờ, thường là dấu hiệu tôm yếu.',''],
+    ['Rớt đáy','"Tôm rớt đáy rải rác"','Tôm chết chìm dưới đáy ao.',''],
+    ['Đóng rong / đóng nhớt','"Tôm đóng rong"','Rong, nhớt, bợn dơ bám trên vỏ và mang tôm.',''],
+    ['Đen mang','"Tôm đen mang"','Mang tôm chuyển màu đen.',''],
+    ['Mềm vỏ / ốp thân','"Tôm ốp, mềm vỏ"','Vỏ tôm mềm, lỏng, không cứng lại sau khi lột.',''],
+    ['Phân trắng','"Phân trắng nổi góc ao"','Sợi phân màu trắng nổi trên mặt ao, thường tập trung cuối gió.',''],
+    ['Gan tụy / tôm chết sớm','"Tôm bị gan", "chết sớm"','Hội chứng hoại tử gan tụy cấp (EMS), hay xảy ra 10–45 ngày đầu sau thả, mùa nắng nóng.',''],
+    ['Đốm trắng','"Tôm bị đốm trắng"','Đốm trắng tròn dưới vỏ đầu ngực, do virus. Miền Nam hay gặp tháng 11 – 3.',''],
+    ['EHP / chậm lớn / phân đàn','"Tôm phân đàn, không lớn"','Tôm ăn nhiều nhưng chậm lớn, cỡ không đều. Thường do vi bào tử trùng EHP.','']
+  ]],
+  ['💰 Thu hoạch & mua bán', [
+    ['Size (con/kg)','"Tôm 40 con"','Số con tôm trong 1 kg. Số càng nhỏ tôm càng lớn.',''],
+    ['Thu tỉa','"Tỉa bớt tôm lớn"','Thu một phần tôm lớn, để lại tôm nhỏ nuôi tiếp.',''],
+    ['Xổ vuông / xổ nước','"Tới con nước xổ vuông"','Thu tôm bằng cách tháo nước qua cống, đặt lưới đón tôm.',''],
+    ['Đặt lú','"Đặt lú bắt tôm"','Dụng cụ lưới dài có nhiều ngăn để bẫy tôm, hay dùng ở vuông quảng canh.',''],
+    ['Thương lái / vựa','"Bán cho vựa"','Người, điểm thu mua tôm tại chỗ.',''],
+    ['FCR (hệ số thức ăn)','"FCR 1.2"','Số kg thức ăn để ra 1 kg tôm. Càng thấp càng lời.','']
+  ]],
+  ['📏 Đo lường', [
+    ['Công (công tầm cắt / tầm lớn)','"Vuông 5 công"','Công tầm cắt = 1.000m². Công tầm lớn ≈ 1.296m². Mỗi vùng dùng khác nhau.','Hỏi lại "công tầm cắt hay tầm lớn" để tính đúng.'],
+    ['Tấc','"Nước sâu 8 tấc"','1 tấc = 10cm. 8 tấc = 0,8m.','Đổi tấc ra mét rồi nhân diện tích ra m³.'],
+    ['Mét khối (m³)','"Ao 3 ngàn khối"','Thể tích nước = diện tích (m²) × độ sâu (m). Liều Tím TiTan tính theo m³.','VD: ao 2.000m² sâu 1,5m = 3.000m³.'],
+    ['Héc-ta (ha) / mẫu','"Nuôi 2 mẫu", "2 héc"','1 ha = 10.000m² = 10 công tầm cắt. Ở Nam Bộ bà con hay gọi 1 ha là 1 mẫu.','']
+  ]]
+];
+let glCat = 'all';
+function renderGloss(){
+  $('#glCats').innerHTML = `<label class="chip"><input type="radio" name="glc" value="all" checked><span>Tất cả</span></label>` + GLOSS.map((g,i)=>`<label class="chip"><input type="radio" name="glc" value="${i}"><span>${esc(g[0])}</span></label>`).join('');
+  $('#glNew').innerHTML = '<thead><tr><th>Từ khách nói</th><th>Nghĩa</th><th>Vùng / tỉnh</th></tr></thead><tbody>' + Array.from({length:6},(_,i)=>`<tr><td>${ed('gln_'+i+'_t','','…')}</td><td>${ed('gln_'+i+'_d','','…')}</td><td>${ed('gln_'+i+'_v','','…')}</td></tr>`).join('') + '</tbody>';
+  filterGloss();
+}
+function filterGloss(){
+  const q = ($('#glSearch').value||'').trim().toLowerCase();
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d');
+  const nq = norm(q);
+  let html = '', count = 0;
+  GLOSS.forEach((g,i) => {
+    if(glCat !== 'all' && String(i) !== glCat) return;
+    const items = g[1].filter(t => !nq || norm(t.join(' ')).includes(nq));
+    if(!items.length) return;
+    count += items.length;
+    html += `<div class="gl-cat">${esc(g[0])} <span class="pill">${items.length}</span></div><div class="gl-grid">` + items.map(t => `<div class="gl"><b>${esc(t[0])}</b><div class="say">${esc(t[1])}</div><p>${esc(t[2])}</p>${t[3]?`<div class="tip">💡 ${esc(t[3])}</div>`:''}</div>`).join('') + '</div>';
+  });
+  $('#glList').innerHTML = html || '<p class="muted">Không tìm thấy từ này. Ghi vào bảng "Từ địa phương sale gặp thêm" bên dưới.</p>';
+}
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const fmt = n => (Math.round(n)||0).toLocaleString('vi-VN') + 'đ';
+const num = n => (Math.round(n*10)/10).toLocaleString('vi-VN');
+const nl = s => s.replace(/\n/g,'<br>');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ed = (k, v='', ph='') => `<span class="ed" data-k="${k}"${ph?` data-ph="${esc(ph)}"`:''}>${esc(v)}</span>`;
+const parseMoney = s => parseInt(String(s).replace(/[^\d]/g,''),10) || 0;
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),1800)}
+async function copyText(txt){
+  try{await navigator.clipboard.writeText(txt);toast('✅ Đã sao chép')}
+  catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('✅ Đã sao chép')}catch(_){toast('Không sao chép được')}ta.remove()}
+}
+
+/* ---------- store: dữ liệu sửa trực tiếp ---------- */
+const LS_KEY = 'titan_edits_v2';
+let BAKED = {}; try{ BAKED = JSON.parse($('#baked').textContent || '{}') }catch(e){}
+let LOCAL = {}; try{ LOCAL = JSON.parse(localStorage.getItem(LS_KEY) || '{}') }catch(e){}
+const store = Object.assign({}, BAKED, LOCAL);
+const saveLocal = () => { try{ localStorage.setItem(LS_KEY, JSON.stringify(LOCAL)) }catch(e){} };
+function applyStore(root=document){
+  root.querySelectorAll('.ed[data-k]').forEach(el => {
+    const k = el.dataset.k;
+    if(el.dataset.def === undefined) el.dataset.def = el.textContent;
+    if(k in store){ el.textContent = store[k]; el.classList.toggle('changed', k in LOCAL) }
+  });
+}
+function setEditing(on){
+  document.body.classList.toggle('editing', on);
+  $('#btnEdit').classList.toggle('on', on);
+  $$('.ed').forEach(el => { if(on){ el.setAttribute('contenteditable','plaintext-only'); if(el.contentEditable !== 'plaintext-only') el.setAttribute('contenteditable','true') } else el.removeAttribute('contenteditable') });
+}
+document.addEventListener('input', e => {
+  const el = e.target.closest && e.target.closest('.ed[data-k]');
+  if(!el) return;
+  const v = el.textContent.trim();
+  store[el.dataset.k] = v; LOCAL[el.dataset.k] = v; saveLocal();
+  el.classList.add('changed');
+  $$(`.ed[data-k="${el.dataset.k}"]`).forEach(o => { if(o !== el) o.textContent = v });
+  if(el.dataset.k.startsWith('tier_')) { fillTierSelect(); calcQuote(); calcDose(); }
+});
+document.addEventListener('keydown', e => { if(e.key === 'Enter' && e.target.closest && e.target.closest('.ed')){ e.preventDefault(); e.target.blur() } });
+document.addEventListener('paste', e => { const el = e.target.closest && e.target.closest('.ed'); if(!el) return; e.preventDefault(); document.execCommand('insertText', false, (e.clipboardData||window.clipboardData).getData('text')) });
+
+/* ---------- render ---------- */
+function renderScript(el, rows){
+  let html = '<thead><tr><th style="text-align:center">Bước</th><th>Giai đoạn & tình huống</th><th>Chỉ dẫn & câu mẫu</th><th>Xử lý tình huống</th></tr></thead><tbody>';
+  let i = 0;
+  while(i < rows.length){
+    let n = 1; while(i+n < rows.length && rows[i+n].step === rows[i].step) n++;
+    for(let j=0;j<n;j++){
+      const r = rows[i+j];
+      const qs = r.q.map(x => `<span class="q">"${esc(x)}"</span><button class="copy" data-copy="${esc(x)}">📋 Chép câu</button>`).join('');
+      html += `<tr>${j===0?`<td class="step" rowspan="${n}"><span class="step-badge">${r.step}</span></td>`:''}<td class="stage">${nl(esc(r.stage))}</td><td class="say">${esc(r.say)}${qs}</td><td class="handle">${esc(r.h)}</td></tr>`;
+    }
+    i += n;
+  }
+  el.innerHTML = html + '</tbody>';
+}
+function tier(i){
+  const t = TIERS[i];
+  return { can:t[0], orig:t[1], ck:t[2], save:t[3],
+    price: parseMoney(store['tier_'+i+'_price'] ?? t[4]) || t[4],
+    promo: store['tier_'+i+'_promo'] ?? t[5], gift:t[6] };
+}
+const SHOW_TIERS = [0, 1]; // 1 can và Combo 3 – dùng để so giá mỗi lít
+function renderPrice(){
+  $('#priceCards').innerHTML = SHOW_TIERS.map(i => {
+    const t = TIERS[i], lit = (t[0] + t[6]) * 5, perL = t[4] / lit;
+    return `<div class="total" style="gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b style="font-size:18px">Combo ${t[0]} – ${t[0]} can 5L</b>${t[0]===3?'<span class="pill gold">Nên đẩy</span>':''}</div>
+      <div class="price">${ed('tier_'+i+'_price', t[4].toLocaleString('vi-VN'))}<small>đ</small></div>
+      <div class="row"><span>Khuyến mãi</span><b style="font-family:var(--font)">${ed('tier_'+i+'_promo', t[5])}</b></div>
+      <div class="row"><span>Tổng số lít nhận</span><b>${lit} lít</b></div>
+      <div class="row"><span>Giá mỗi lít</span><b data-perl="${i}">${Math.round(perL).toLocaleString('vi-VN')}</b></div>
+      <div class="row big" style="font-size:13.5px"><span>Data bào 1 (sau 2 ngày)</span><b style="font-family:var(--font);font-size:13.5px;color:#fff">${ed('tier_'+i+'_d1','','–')}</b></div>
+      <div class="row"><span>Data bào 2 (sau 4 ngày)</span><b style="font-family:var(--font)">${ed('tier_'+i+'_d2','','–')}</b></div>
+    </div>`;
+  }).join('');
+}
+function updatePerL(){ $$('[data-perl]').forEach(td => { const t = tier(+td.dataset.perl); td.textContent = Math.round(t.price/((t.can+t.gift)*5)).toLocaleString('vi-VN') }) }
+function renderAll(){
+  $('#nav').innerHTML = PAGES.map(p => `<li><button data-page="${p.id}"><span class="ic">${p.ic}</span><span>${p.name}</span></button></li>`).join('');
+  renderPrice();
+  renderScript($('#tblInbox'), INBOX);
+  renderScript($('#tblCall'), CALL);
+  $('#objGrid').innerHTML = OBJ.map(o => `<div class="obj"><h3><span>${o.e}</span>${esc(o.t)} <span class="pill red">${o.pct} data mất</span></h3><div class="small muted">${esc(o.n)}</div><div class="quote">Khách nói: ${esc(o.quote)}</div><div><div class="lbl" style="margin-bottom:4px">Cách xử lý</div><ol>${o.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol></div><div class="say">"${esc(o.say)}"</div><button class="copy" style="align-self:flex-start;margin:0" data-copy="${esc(o.say)}">📋 Chép câu</button></div>`).join('');
+  $('#personaGrid').innerHTML = PERSONA.map(p => `<div class="persona"><div class="hd"><span class="e">${p.e}</span><div><b>${esc(p.t)}</b><div><span class="pill green" style="margin-top:4px">${esc(p.stat)}</span></div></div></div><div class="bd"><div><div class="lbl">Quan tâm</div>${esc(p.care)}</div><div><div class="lbl">Cách nói ưu tiên</div>${esc(p.angle)}</div><div class="note small">${esc(p.tip)}</div></div></div>`).join('');
+  $('#timeline').innerHTML = SEASON.map(s => `<div class="tl" style="--c:${s.c}"><span class="e">${s.e}</span><b>${esc(s.t)}</b><span class="pill">${esc(s.p)}</span><div class="small muted"><b style="color:var(--brand-800)">Liều:</b> ${esc(s.u)}</div><div class="angle">${esc(s.a)}</div></div>`).join('');
+  renderCalendar(); renderGloss();
+  // chips cho form ghi note
+  $$('#noteForm .chips[data-g]').forEach(c => {
+    const g = c.dataset.g, type = c.dataset.type;
+    c.innerHTML = c.textContent.split('|').map(v => `<label class="chip"><input type="${type}" name="n_${g}" value="${esc(v.trim())}"><span>${esc(v.trim())}</span></label>`).join('');
+  });
+  renderChecklist('#checklist', CHECK_CALL, '#ckBar', null);
+}
+function renderChecklist(sel, items, bar, persistKey){
+  const saved = persistKey ? (store['ck_'+persistKey] || '') .split(',') : [];
+  $(sel).innerHTML = items.map((t,i) => `<li><label><input type="checkbox" data-i="${i}" ${saved.includes(String(i))?'checked':''}><span>${esc(t)}</span></label></li>`).join('');
+  const upd = () => {
+    const boxes = $$(sel+' input'); const done = boxes.filter(b=>b.checked);
+    $(bar).style.width = (done.length/boxes.length*100)+'%';
+    if(persistKey){ const v = done.map(b=>b.dataset.i).join(','); store['ck_'+persistKey]=v; LOCAL['ck_'+persistKey]=v; saveLocal() }
+  };
+  $(sel).addEventListener('change', upd); upd();
+}
+
+/* ---------- liều & chi phí ---------- */
+function calcDose(){
+  const a = parseFloat($('#dArea').value)||0, d = parseFloat($('#dDepth').value)||0;
+  if(document.activeElement === $('#dArea') || document.activeElement === $('#dDepth')){ if(a && d) $('#dVol').value = Math.round(a*d) }
+  const vol = parseFloat($('#dVol').value)||0;
+  const per = parseFloat(($('#dPurpose input:checked')||{}).value||2000);
+  const label = ($('#dPurpose input:checked')||{}).parentElement?.innerText.split(' (')[0] || '';
+  const t1 = tier(0), t3 = tier(1);
+  const pL1 = t1.price / ((t1.can+t1.gift)*5), pL3 = t3.price / ((t3.can+t3.gift)*5);
+  const lit = vol / per;
+  $('#dOutVol').textContent = vol ? vol.toLocaleString('vi-VN')+' m³' : '–';
+  $('#dOutL').textContent = vol ? (lit < 1 ? Math.round(lit*1000).toLocaleString('vi-VN')+' ml' : num(lit)+' lít') : '–';
+  $('#dOutC1').textContent = vol ? fmt(lit*pL1) : '–';
+  $('#dOutC3').textContent = vol ? fmt(lit*pL3) : '–';
+  $('#dOutK').textContent = fmt(1000/per*pL1) + ' → ' + fmt(1000/per*pL3);
+  const timesPerCan = vol ? Math.floor(5/lit) : 0;
+  $('#dMsg').textContent = vol
+    ? `Dạ ao anh khoảng ${vol.toLocaleString('vi-VN')}m³ nước, ${label.toLowerCase()} thì mỗi lần dùng khoảng ${$('#dOutL').textContent}, chi phí chỉ khoảng ${fmt(lit*pL1)} một lần. Một can 5 lít dùng được khoảng ${timesPerCan} lần cho ao anh. Lấy combo 3 can tặng 1 can thì mỗi lần chỉ còn khoảng ${fmt(lit*pL3)}.`
+    : 'Nhập diện tích + độ sâu, hoặc thể tích nước để ra câu báo chi phí.';
+}
+
+/* ---------- ghi note ---------- */
+function buildNote(){
+  const vals = g => $$(`#noteForm input[name="n_${g}"]:checked`).map(i=>i.value);
+  const lo = vals('loai'), ao = vals('ao'), gd = vals('gd'), nc = vals('nc'), kq = vals('kq'), ld = vals('ld'), kn = vals('kenh');
+  const soAo = $('#nSoAo').value, m3 = $('#nM3').value;
+  let aoTxt = ao.join(', ').toLowerCase();
+  if(soAo || m3) aoTxt += (aoTxt?' ':'') + (soAo?soAo+'x':'') + (m3?Number(m3).toLocaleString('vi-VN')+'m³':'');
+  const gdTxt = [gd.join('').toLowerCase(), $('#nGdInfo').value.trim()].filter(Boolean).join(' ');
+  const ncTxt = [nc.join(', ').toLowerCase(), $('#nTrieuChung').value.trim()].filter(Boolean).join(': ');
+  const kqTxt = [kq.join('').toLowerCase(), $('#nHen').value.trim()].filter(Boolean).join(' ');
+  const parts = [lo.join('').toLowerCase(), aoTxt, gdTxt, ncTxt, kqTxt, ld.join(', ').toLowerCase(), kn.join(', ').toLowerCase(), $('#nTinh').value.trim()];
+  const filled = parts.filter(Boolean);
+  const missing = [];
+  if(!lo.length) missing.push('loài nuôi'); if(!m3 && !ao.length) missing.push('loại ao / m³'); if(!gd.length) missing.push('giai đoạn'); if(!kq.length) missing.push('kết quả'); if(!$('#nTinh').value.trim()) missing.push('tỉnh');
+  $('#noteOut').textContent = filled.length ? filled.join(' | ') : 'Tích chọn bên trái, note sẽ hiện ở đây.';
+  const tips = [...ld, ...kq].filter(k => TIPS[k]).map(k => `<div class="note teal small" style="margin-top:8px"><b>${esc(k)}:</b> ${esc(TIPS[k])}</div>`).join('');
+  $('#noteTip').innerHTML = (missing.length ? `<div class="note small">Còn thiếu: <b>${missing.join(', ')}</b></div>` : `<div class="note green small">✓ Note đã đủ thông tin chính</div>`) + tips;
+}
+
+/* ---------- báo giá ---------- */
+function fillTierSelect(){
+  const s = $('#qTier'), cur = s.value || '1';
+  s.innerHTML = SHOW_TIERS.map(i => { const t = tier(i); return `<option value="${i}">Combo ${t.can} – ${t.can} can (${t.can*5}L) – ${fmt(t.price)}${t.promo?' · '+t.promo:''}</option>` }).join('');
+  s.value = cur; updatePerL();
+}
+function calcQuote(){
+  const t = tier(parseInt($('#qTier').value)||0);
+  const disc = Math.max(0, parseFloat($('#qDisc').value)||0);
+  const total = Math.max(0, t.price - disc);
+  const lit = (t.can + t.gift) * 5;
+  $('#tCan').textContent = t.can + ' can'; $('#tGift').textContent = t.promo || '–';
+  $('#tLit').textContent = lit + ' lít'; $('#tOrig').textContent = fmt(t.price);
+  $('#tDisc').textContent = disc ? '−'+fmt(disc) : '0đ'; $('#tTotal').textContent = fmt(total);
+  const name = $('#qName').value.trim() || 'anh/chị';
+  $('#msgOut').textContent = [
+    `Dạ em chào ${name}, em xác nhận đơn Sát khuẩn Tím TiTan:`,
+    `• Số lượng: ${t.can} can 5L – ${fmt(t.price)}`,
+    t.promo ? `• Khuyến mãi: ${t.promo}` : null,
+    disc ? `• Ưu đãi thêm: −${fmt(disc)}` : null,
+    `• Tổng thanh toán: ${fmt(total)}`,
+    $('#qPhone').value.trim() ? `• SĐT nhận hàng: ${$('#qPhone').value.trim()}` : null,
+    $('#qAddr').value.trim() ? `• Địa chỉ: ${$('#qAddr').value.trim()}` : null,
+    $('#qNote').value.trim() ? `• Ghi chú: ${$('#qNote').value.trim()}` : null,
+    ``, `Anh/chị kiểm tra giúp em, có gì sai báo em sửa liền nha. Anh/chị nhận hàng được kiểm tra trước khi thanh toán. Bên em gửi kèm hướng dẫn liều theo m³ cho ao mình, có gì cứ nhắn Zalo để kỹ thuật hỗ trợ ạ.`
+  ].filter(x => x !== null).join('\n');
+}
+
+/* ---------- điều hướng ---------- */
+function go(id){
+  const p = PAGES.find(x=>x.id===id) || PAGES[0];
+  $$('.page').forEach(s => s.classList.toggle('active', s.id === 'p-'+p.id));
+  $$('#nav button').forEach(b => b.classList.toggle('active', b.dataset.page === p.id));
+  $('#pgTitle').textContent = p.title; $('#pgDesc').textContent = p.desc;
+  try{ localStorage.setItem('titan_page', p.id) }catch(e){}
+  if(location.hash !== '#'+p.id) history.replaceState(null,'','#'+p.id);
+  closeMenu(); window.scrollTo({top:0});
+}
+function openMenu(){$('#sidebar').classList.add('open');$('#overlay').classList.add('show')}
+function closeMenu(){$('#sidebar').classList.remove('open');$('#overlay').classList.remove('show')}
+
+document.addEventListener('click', e => {
+  if(document.body.classList.contains('editing') && e.target.closest('.ed')) return;
+  const nav = e.target.closest('#nav button'); if(nav) return go(nav.dataset.page);
+  const c = e.target.closest('[data-copy]'); if(c) return copyText(c.dataset.copy);
+});
+$('#menuBtn').onclick = openMenu; $('#overlay').onclick = closeMenu;
+$('#btnEdit').onclick = () => setEditing(!document.body.classList.contains('editing'));
+$('#btnDownload').onclick = () => {
+  const json = JSON.stringify(store).replace(/</g,'\\u003c');
+  const out = SRC.replace(/(<script type="application\/json" id="baked">)[\s\S]*?(<\/script>)/, (m,a,b) => a + json + b);
+  const blob = new Blob([out], {type:'text/html'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'index.html';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+  toast('💾 Đã tải index.html – thay file trên GitHub để cả team thấy');
+};
+$('#btnClear').onclick = () => {
+  if(!confirm('Bỏ toàn bộ chỉnh sửa đã lưu trên máy này?')) return;
+  LOCAL = {}; saveLocal();
+  Object.keys(store).forEach(k => delete store[k]); Object.assign(store, BAKED);
+  $$('.ed[data-k]').forEach(el => { el.textContent = (el.dataset.k in store) ? store[el.dataset.k] : (el.dataset.def ?? ''); el.classList.remove('changed') });
+  fillTierSelect(); calcQuote(); calcDose(); toast('Đã bỏ chỉnh sửa');
+};
+['#dArea','#dDepth','#dVol'].forEach(s => $(s).addEventListener('input', calcDose));
+$('#dPurpose').addEventListener('change', calcDose);
+$('#dCopy').onclick = () => copyText($('#dMsg').textContent);
+$('#noteForm').addEventListener('input', buildNote); $('#noteForm').addEventListener('change', buildNote);
+$('#noteCopy').onclick = () => copyText($('#noteOut').textContent);
+$('#noteReset').onclick = () => { $$('#noteForm input').forEach(i => { if(i.type==='checkbox'||i.type==='radio') i.checked=false; else i.value='' }); $$('#checklist input').forEach(i=>i.checked=false); $('#ckBar').style.width='0'; buildNote() };
+$$('#p-quote input,#p-quote select,#p-quote textarea').forEach(el => el.addEventListener('input', calcQuote));
+$('#qTier').addEventListener('change', calcQuote);
+$('#glSearch').addEventListener('input', filterGloss);
+$('#glCats').addEventListener('change', e => { if(e.target.name === 'glc'){ glCat = e.target.value; filterGloss() } });
+$('#btnCopyMsg').onclick = () => copyText($('#msgOut').textContent);
+$('#btnReset').onclick = () => {['qName','qPhone','qAddr','qNote'].forEach(i=>$('#'+i).value='');$('#qTier').value='1';$('#qDisc').value=0;calcQuote()};
+window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+renderAll(); applyStore(); fillTierSelect(); calcQuote(); calcDose(); buildNote();
+let start = location.hash.slice(1);
+if(!start){ try{ start = localStorage.getItem('titan_page') }catch(e){} }
+go(start || 'product');
+</script>
+</body>
+</html>
