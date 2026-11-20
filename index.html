@@ -834,6 +834,138 @@ CHỐT ĐƠN:
           </table></div>
         </div>
       </section>
+
+      <!-- 14. GIÁ TÔM -->
+      <section class="page" id="p-gia">
+        <div class="note teal" style="margin-bottom:16px">🦐 Giá tôm nguyên liệu <b>tại ao</b> (đ/kg). <b>Toàn quốc</b>: tổng hợp báo giá hằng ngày (Tép Bạc). <b>Theo tỉnh</b>: chỉ hiện khi báo chí có tin mới, kèm ngày và nguồn. Tự cập nhật mỗi sáng. Giá tham khảo để mở lời với khách, không dùng để cam kết.</div>
+        <div class="grid g3" id="gtKpi"></div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+            <div class="sec-title" style="margin:0"><span class="n">📋</span>Bảng giá hôm nay <span class="pill" id="gtDate" style="margin-left:6px">…</span></div>
+            <div class="chips" id="gtType">
+              <label class="chip"><input type="radio" name="gtt" value="the" checked><span>Tôm thẻ</span></label>
+              <label class="chip"><input type="radio" name="gtt" value="su"><span>Tôm sú</span></label>
+            </div>
+          </div>
+          <div class="tbl-wrap"><table id="gtTable"></table></div>
+          <div class="src" id="gtSrc"></div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+            <div class="sec-title" style="margin:0"><span class="n">📈</span>Xu hướng giá toàn quốc</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="field"><select id="gtSize" style="width:auto"></select></div>
+              <div class="chips" id="gtRange">
+                <label class="chip"><input type="radio" name="gtr" value="7" checked><span>7 ngày</span></label>
+                <label class="chip"><input type="radio" name="gtr" value="30"><span>30 ngày</span></label>
+              </div>
+            </div>
+          </div>
+          <div id="gtChart"></div>
+        </div>
+
+        <div class="sec-title" style="margin-top:22px"><span class="n">📍</span>Giá theo tỉnh – tin mới nhất</div>
+        <div class="grid g3" id="gtProv"></div>
+
+        <div class="sec-title" style="margin-top:22px"><span class="n">💬</span>Câu mở lời cho sale theo giá hôm nay</div>
+        <div class="grid g3" id="gtOpen"></div>
+      </section>
+      <script>
+      (function(){
+        const PROV = ['Cà Mau','Bạc Liêu','Sóc Trăng','Bến Tre','Trà Vinh','Kiên Giang'];
+        const SIZES = {the:['20','30','40','50','60','70','80','90','100'], su:['20','30','40']};
+        const NAME = {the:'Tôm thẻ', su:'Tôm sú'};
+        const k = n => n==null ? '–' : Math.round(n/1000).toLocaleString('vi-VN') + 'k';
+        const vnd = n => n==null ? '–' : n.toLocaleString('vi-VN') + 'đ';
+        const dmy = s => { if(!s) return ''; const [y,m,d] = s.split('-'); return d+'/'+m+'/'+y; };
+        const daysAgo = s => Math.round((Date.now() - new Date(s+'T00:00:00+07:00')) / 864e5);
+        const E = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+        let D = null, type = 'the', range = 7;
+
+        function delta(cur, prev){
+          if(cur==null || prev==null) return '<span class="small muted">–</span>';
+          const d = cur - prev; if(!d) return '<span class="small muted">= 0</span>';
+          const c = d>0 ? 'var(--green-700)' : 'var(--red-700)';
+          return `<span class="small" style="color:${c};font-weight:700">${d>0?'▲':'▼'} ${Math.abs(d).toLocaleString('vi-VN')}đ</span>`;
+        }
+        function renderKpi(){
+          const h = D.history, t = h[h.length-1], p = h.length>1 ? h[h.length-2] : null;
+          const box = (sz, lab) => {
+            const v = t.the[sz], pv = p ? p.the[sz] : null;
+            return `<div class="kpi"><div class="v">${k(v)}</div><div class="l">Tôm thẻ ${sz} con/kg · ${lab}</div><div class="s">${p ? delta(v,pv)+' so với '+dmy(p.date) : 'Đang tích lũy dữ liệu để so sánh'}</div></div>`;
+          };
+          $('#gtKpi').innerHTML = box('30','size lớn') + box('50','size giữa') + box('100','size nhỏ');
+        }
+        function renderTable(){
+          const h = D.history, t = h[h.length-1], p = h.length>1 ? h[h.length-2] : null;
+          $('#gtDate').textContent = 'Cập nhật ' + dmy(D.updated);
+          const head = '<thead><tr><th>Size</th><th class="num">Toàn quốc</th><th>So hôm trước</th>' + PROV.map(x=>`<th class="num">${x}</th>`).join('') + '</tr></thead>';
+          const rows = SIZES[type].map(sz => {
+            const v = t[type][sz], idd = t.itemDate && t.itemDate[type+sz];
+            const note = idd && idd !== t.date ? `<div class="small muted">giá ngày ${dmy(idd)}</div>` : '';
+            const pc = PROV.map(pr => { const o = D.provinces[pr]; const pv = o && o[type] && o[type][sz]; return `<td class="num">${pv ? k(pv) : '<span class="muted">–</span>'}</td>`; }).join('');
+            return `<tr><td><b>${sz} con/kg</b></td><td class="num"><b>${vnd(v)}</b>${note}</td><td>${p ? delta(v, p[type][sz]) : '<span class="small muted">–</span>'}</td>${pc}</tr>`;
+          }).join('');
+          $('#gtTable').innerHTML = head + '<tbody>' + rows + '</tbody>';
+          $('#gtSrc').innerHTML = `Toàn quốc: <a href="${E(t.url)}" target="_blank" rel="noopener" style="color:var(--brand-700)">${E(t.source)}</a> · Cột tỉnh: giá tin gần nhất, xem ngày ở thẻ tỉnh bên dưới ("–" = chưa có tin).`;
+        }
+        function renderSizeSel(){
+          $('#gtSize').innerHTML = ['the','su'].flatMap(tp => SIZES[tp].map(sz => `<option value="${tp}|${sz}">${NAME[tp]} ${sz} con/kg</option>`)).join('');
+          $('#gtSize').value = 'the|30';
+        }
+        function renderChart(){
+          const [tp, sz] = $('#gtSize').value.split('|');
+          const pts = D.history.slice(-range).map(h => ({d:h.date, v:h[tp] && h[tp][sz]})).filter(x => x.v);
+          if(pts.length < 2){ $('#gtChart').innerHTML = `<div class="note">Mới có ${pts.length} ngày dữ liệu (${pts.map(x=>dmy(x.d)+': '+vnd(x.v)).join(', ')||'chưa có'}). Biểu đồ sẽ hiện khi đủ từ 2 ngày, dữ liệu tự cộng dồn mỗi sáng.</div>`; return; }
+          const W=760,H=240,L=56,R=16,T=16,B=34, vs=pts.map(x=>x.v), mn=Math.min(...vs), mx=Math.max(...vs), pad=Math.max((mx-mn)*0.15, 2000), lo=mn-pad, hi=mx+pad;
+          const X = i => L + (W-L-R) * (pts.length===1 ? .5 : i/(pts.length-1)), Y = v => T + (H-T-B) * (1-(v-lo)/(hi-lo));
+          const grid = [0,1,2,3].map(i => { const v = lo + (hi-lo)*i/3; return `<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(76,29,149,.12)"/><text x="${L-8}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="#6e6489">${k(v)}</text>`; }).join('');
+          const line = pts.map((p,i)=>`${i?'L':'M'}${X(i)},${Y(p.v)}`).join(' ');
+          const step = Math.ceil(pts.length/8);
+          const dots = pts.map((p,i)=>`<circle cx="${X(i)}" cy="${Y(p.v)}" r="3.5" fill="#7c3aed"><title>${dmy(p.d)}: ${vnd(p.v)}</title></circle>` + (i%step===0||i===pts.length-1 ? `<text x="${X(i)}" y="${H-12}" text-anchor="middle" font-size="11" fill="#6e6489">${dmy(p.d).slice(0,5)}</text>` : '')).join('');
+          const first = pts[0].v, last = pts[pts.length-1].v, ch = last-first;
+          $('#gtChart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${grid}<path d="${line}" fill="none" stroke="#7c3aed" stroke-width="2.5"/>${dots}</svg><div class="small muted">${NAME[tp]} ${sz} con/kg · ${pts.length} ngày: ${vnd(first)} → ${vnd(last)} (${ch>=0?'+':''}${ch.toLocaleString('vi-VN')}đ)</div>`;
+        }
+        function renderProv(){
+          $('#gtProv').innerHTML = PROV.map(pr => {
+            const o = D.provinces[pr];
+            if(!o) return `<div class="obj"><h3>📍 ${pr}</h3><div class="small muted">Chưa có tin giá riêng của tỉnh. Dùng giá toàn quốc ở bảng trên.</div></div>`;
+            const old = daysAgo(o.date) > 14;
+            const items = ['the','su'].flatMap(tp => Object.entries(o[tp]||{}).map(([sz,v]) => `<li>${NAME[tp]} ${sz} con/kg: <b>${vnd(v)}</b></li>`)).join('');
+            return `<div class="obj"><h3>📍 ${pr} <span class="pill ${old?'gold':'green'}">${E(o.dateLabel||dmy(o.date))}</span></h3><ul class="dots small">${items}</ul>${old?'<div class="note small">Tin đã hơn 2 tuần, chỉ tham khảo.</div>':''}<div class="small"><a href="${E(o.url)}" target="_blank" rel="noopener" style="color:var(--brand-700)">🔗 ${E(o.source)}</a></div></div>`;
+          }).join('');
+        }
+        function renderOpen(){
+          const h = D.history, t = h[h.length-1], p = h.length>1 ? h[h.length-2] : null;
+          const big = t.the['30'], small = t.the['100'], gap = big && small ? big - small : null;
+          let trend = 'chưa đủ dữ liệu', d30 = null;
+          if(p && p.the['30'] && big){ d30 = big - p.the['30']; trend = d30>0 ? 'đang lên' : d30<0 ? 'đang xuống' : 'đứng giá'; }
+          const ops = [
+            {t:'Mở lời bằng giá tôm', w:'Mọi cuộc gọi, câu đầu sau khi chào',
+             q:`Dạ hôm nay giá tôm thẻ size 30 tại ao khoảng ${k(big)}, size 100 khoảng ${k(small)} một ký anh. Ao anh tôm được bao nhiêu con một ký rồi anh?`,
+             tip:'Hỏi size → biết giai đoạn ao → chọn đúng liều và mục đích xử lý.'},
+            {t:'Chênh lệch size lớn – size nhỏ', w:'Khách đang nuôi, tôm trên 30 ngày',
+             q:`Dạ hôm nay tôm size 30 hơn size 100 khoảng ${k(gap)} một ký anh. Ao giữ môi trường ổn định để tôm lên size thì bán lời hơn nhiều, nên khâu xử lý nước định kỳ đáng đầu tư anh.`,
+             tip:'Không nói Tím TiTan làm tôm lớn nhanh. Chỉ nói về giữ môi trường ao.'},
+            {t:'Theo xu hướng giá', w:`Giá size 30 ${trend}${d30?' ('+(d30>0?'+':'')+d30.toLocaleString('vi-VN')+'đ)':''}`,
+             q: d30<0 ? 'Dạ giá tôm mấy bữa nay xuống, mình càng phải tính kỹ chi phí từng m³ nước. Ao anh bao nhiêu m³, em tính chi phí xử lý mỗi tháng cho anh coi nha.'
+              : d30>0 ? 'Dạ giá tôm đang lên anh, giai đoạn này giữ ao ổn định để không mất vụ là quan trọng nhất. Ao anh bao nhiêu m³, em tính chi phí xử lý định kỳ cho anh nha.'
+              : 'Dạ giá tôm mấy bữa nay không biến động nhiều anh, mình tính kỹ chi phí xử lý ao cho vừa túi tiền. Ao anh bao nhiêu m³, em tính chi phí mỗi tháng cho anh coi nha.',
+             tip:'Giá xuống → nói chi phí/m³ (mục 12). Giá lên/đứng → nói giữ vụ an toàn.'}
+          ];
+          $('#gtOpen').innerHTML = ops.map(o => `<div class="obj"><h3>${E(o.t)}</h3><div class="small muted">Dùng khi: <b style="color:var(--brand-800)">${E(o.w)}</b></div><span class="q">"${E(o.q)}"</span><div><button class="copy" data-copy="${E(o.q)}">📋 Chép câu</button></div><div class="small">💡 ${E(o.tip)}</div></div>`).join('');
+        }
+        function renderAllGT(){ renderKpi(); renderTable(); renderChart(); renderProv(); renderOpen(); }
+        fetch('gia-tom.json?t=' + Date.now(), {cache:'no-store'}).then(r => r.json()).then(d => {
+          D = d; renderSizeSel(); renderAllGT();
+          $('#gtType').addEventListener('change', e => { type = e.target.value; renderTable(); });
+          $('#gtRange').addEventListener('change', e => { range = +e.target.value; renderChart(); });
+          $('#gtSize').addEventListener('change', renderChart);
+        }).catch(() => { $('#gtKpi').innerHTML = '<div class="note red">Không tải được dữ liệu giá tôm (gia-tom.json). Mở trang qua link GitHub Pages, không mở file trên máy.</div>'; });
+      })();
+      </script>
     </main>
   </div>
 </div>
@@ -855,7 +987,8 @@ const PAGES = [
   {id:'gloss',    ic:'📖', name:'10. Từ Điển Nghề Tôm',  title:'10. TỪ ĐIỂN NGHỀ NUÔI TÔM MIỀN TÂY', desc:'Hiểu đúng từ bà con hay dùng để tư vấn tự nhiên'},
   {id:'quote',    ic:'🧾', name:'11. Báo Giá Nhanh',     title:'11. BÁO GIÁ NHANH & TIN NHẮN CHỐT ĐƠN', desc:'Chọn gói theo bảng giá, tạo tin nhắn xác nhận'},
   {id:'compete',  ic:'⚔️', name:'12. So Sánh Đối Thủ',  title:'12. SO SÁNH ĐỐI THỦ & CHUẨN HÓA CÂU TƯ VẤN', desc:'8 sản phẩm cùng nhóm sát khuẩn – so theo cùng mục đích, liều và m³'},
-  {id:'script',   ic:'🎙️', name:'13. Kịch Bản Tư Vấn',  title:'13. KỊCH BẢN TƯ VẤN CHỐT ĐƠN (BẢN GỐC)', desc:'Kịch bản chốt Tím TiTan – bấm chép từng câu'}
+  {id:'script',   ic:'🎙️', name:'13. Kịch Bản Tư Vấn',  title:'13. KỊCH BẢN TƯ VẤN CHỐT ĐƠN (BẢN GỐC)', desc:'Kịch bản chốt Tím TiTan – bấm chép từng câu'},
+  {id:'gia',      ic:'🦐', name:'14. Giá Tôm Hôm Nay',  title:'14. GIÁ TÔM HÔM NAY THEO KHU VỰC', desc:'Cập nhật mỗi sáng – dùng để mở lời với khách'}
 ];
 
 // Chỉ công khai 2 mức để so giá mỗi lít. Các mốc combo cao không đưa lên trang (bảng giá chưa thống nhất giữa sale và digital).
