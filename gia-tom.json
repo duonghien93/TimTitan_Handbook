@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "note": "Giá tôm nguyên liệu tại ao, đ/kg. Toàn quốc: Tép Bạc tổng hợp báo giá hằng ngày. Giá tỉnh: lấy từ báo chí khi có tin mới.",
   "history": [
     {
@@ -133,20 +133,51 @@
         "su30": "2026-11-23",
         "su40": "2026-11-23"
       }
+    },
+    {
+      "date": "2026-11-28",
+      "source": "Tép Bạc – Giá tôm hôm nay",
+      "url": "https://tepbac.com/gia-thuy-san/gia/tom",
+      "the": {
+        "20": 195000,
+        "30": 165160,
+        "40": 142140,
+        "50": 129130,
+        "60": 118000,
+        "70": 116000,
+        "80": 113000,
+        "90": 104000,
+        "100": 95000
+      },
+      "su": {
+        "20": 200000,
+        "30": 300000,
+        "40": 270000
+      },
+      "itemDate": {
+        "the90": "2026-11-19",
+        "su20": "2026-10-05",
+        "su30": "2026-11-27",
+        "su40": "2026-11-27"
+      }
     }
   ],
   "provinces": {
     "Cà Mau": {
-      "date": "2026-10-31",
-      "dateLabel": "cuối tháng 10/2026",
-      "source": "Thủy sản Việt Nam",
-      "url": "https://thuysanvietnam.com.vn/gia-muc-ca-thu-tang-manh-thi-truong-tom-it-bien-dong/",
+      "date": "2026-11-27",
+      "dateLabel": "27/11/2026 (tôm sú: 19/11/2026)",
+      "source": "Tép Bạc – Giá tôm Cà Mau",
+      "url": "https://tepbac.com/gia-thuy-san/gia/tom?location_id=3291",
       "the": {
-        "20": 262000
+        "20": 220000,
+        "30": 165000,
+        "40": 135000,
+        "50": 125000,
+        "60": 117000
       },
       "su": {
-        "20": 300000,
-        "30": 172000
+        "30": 175000,
+        "40": 160000
       }
     },
     "Bạc Liêu": null,
